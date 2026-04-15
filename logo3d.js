@@ -147,11 +147,17 @@ function initLogo3D(container) {
     group.position.set(-center.x, -center.y, -center.z);
 
     const size = box.getSize(new THREE.Vector3());
-    // Calculate visible width at camera distance for correct scaling
+    // Calculate visible area at camera distance
     const vFOV = camera.fov * Math.PI / 180;
     const visH = 2 * Math.tan(vFOV / 2) * camera.position.z;
     const visW = visH * camera.aspect;
-    const s = (visW * 0.7) / size.x;
+    // Account for rotation: max projected width = diagonal of XZ footprint
+    const maxRotW = Math.sqrt(size.x * size.x + depth * depth);
+    const maxRotH = size.y; // height doesn't change on Y rotation
+    // Scale to fit both width and height with margin
+    const sW = (visW * 0.6) / maxRotW;
+    const sH = (visH * 0.6) / maxRotH;
+    const s = Math.min(sW, sH);
     group.scale.set(s, -s, s);
 
     const box2 = new THREE.Box3().setFromObject(group);
