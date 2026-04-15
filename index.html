@@ -90,13 +90,13 @@ background:radial-gradient(ellipse 90% 80% at 50% 50%,var(--bg3) 0%,var(--bg) 70
 background-image:radial-gradient(circle,rgba(212,168,75,.05) 1px,transparent 1px);background-size:28px 28px}
 .h-content{position:relative;z-index:2;padding:110px 24px 100px;display:flex;flex-direction:column;align-items:center}
 .h-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:52px}
-.h-lockup{display:flex;align-items:center;gap:28px;flex-wrap:wrap;justify-content:center;margin-bottom:56px;position:relative}
+.h-lockup{display:flex;flex-direction:column;align-items:center;gap:0;justify-content:center;margin-bottom:56px;position:relative}
 .h-lockup::after{content:'';position:absolute;width:500px;height:130px;left:50%;top:50%;transform:translate(-50%,-50%);
 border-radius:50%;background:radial-gradient(ellipse,rgba(212,168,75,.09),transparent 70%);
 pointer-events:none;animation:haloPulse 4s ease-in-out infinite}
 @keyframes haloPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
 .h-vs{height:clamp(52px,8vw,100px);object-fit:contain;filter:brightness(0) invert(1) drop-shadow(0 0 20px rgba(255,255,255,.12))}
-.h-x{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(28px,4vw,52px);color:var(--gold);line-height:1;flex-shrink:0;align-self:center}
+.h-x{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(28px,4vw,52px);color:var(--gold);line-height:1;flex-shrink:0;align-self:center;margin:8px 0}
 .h-brand{height:clamp(22px,3vw,38px);object-fit:contain;filter:brightness(0) invert(1) drop-shadow(0 0 16px rgba(255,255,255,.1))}
 .h-tagline{font-family:'Playfair Display',serif;font-size:clamp(24px,3.8vw,48px);font-weight:400;line-height:1.2;
 max-width:720px;margin-bottom:56px}
@@ -108,11 +108,11 @@ max-width:720px;margin-bottom:56px}
 
 /* ── 3D LOGO CONTAINERS ── */
 .logo-3d{display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
-.hero-logo-vs{width:320px;height:160px}
-.hero-logo-brand{width:280px;height:80px}
+.hero-logo-vs{width:500px;height:320px}
+.hero-logo-brand{width:400px;height:150px}
 @media(max-width:700px){
-  .hero-logo-vs{width:220px;height:110px}
-  .hero-logo-brand{width:200px;height:60px}
+  .hero-logo-vs{width:320px;height:220px}
+  .hero-logo-brand{width:280px;height:110px}
 }
 
 /* ══ PARTNERS TICKER ════════════════════════════ */
