@@ -84,13 +84,16 @@ function initLogo3D(container) {
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
-  // Controls
+  // Controls — user interaction only, no autoRotate (we do custom rotation)
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.06;
-  controls.autoRotate = rotateSpeed > 0;
-  controls.autoRotateSpeed = rotateSpeed;
+  controls.autoRotate = false;
   controls.enableZoom = false;
+
+  // Custom rotation state — slow at front (0°), fast at back (180°)
+  let rotAngle = 0;
+  const rotActive = rotateSpeed > 0;
 
   // Ljus
   scene.add(new THREE.AmbientLight(0xfff8f0, 1.5));
@@ -157,10 +160,34 @@ function initLogo3D(container) {
     scene.add(group);
   });
 
+  // Animate with variable rotation speed
+  let logoGroup = null;
+  const origOnLoad = scene.add.bind(scene);
+
   // Animate
   (function loop() {
     requestAnimationFrame(loop);
     controls.update();
+
+    // Variable-speed rotation: slow at front (0°), fast at back (180°)
+    if (rotActive && scene.children.length > 0) {
+      const group = scene.children[scene.children.length - 1];
+      if (group && group.isGroup) {
+        // sin²(θ/2) = 0 at front, 1 at back
+        const halfAngle = (rotAngle % (Math.PI * 2)) / 2;
+        const backFactor = Math.sin(halfAngle);
+        const speedFactor = backFactor * backFactor; // 0→1→0
+
+        // minSpeed at front, ~4x at back
+        const minSpeed = rotateSpeed * 0.004;
+        const maxSpeed = rotateSpeed * 0.018;
+        const speed = minSpeed + (maxSpeed - minSpeed) * speedFactor;
+
+        rotAngle += speed;
+        group.rotation.y = rotAngle;
+      }
+    }
+
     renderer.render(scene, camera);
   })();
 
