@@ -134,20 +134,17 @@ function initLogo3D(container) {
 
     if (rotateSpeed > 0 && pivot.children.length > 0) {
 
-      // ── SPEED PROFILE: 4/5 readable, 1/5 back ──
-      // cos(angle) = 1 at front, -1 at back
+      // ── SPEED: 1/5 readable (±36° center), 4/5 fast whip ──
       const angle = rotAngle % (Math.PI * 2);
       const facing = Math.cos(angle);
-
-      // Front zone ~288° (4/5): slow. Back zone ~72° (1/5): fast.
-      // facing > -0.31 ≈ front 4/5, facing < -0.31 ≈ back 1/5
-      const inBack = Math.max(0, (-facing - 0.31) / 0.69); // 0 at front, 1 at dead back
-      const inBackSm = inBack * inBack; // smooth ramp
-
-      // Front: 1x speed. Back: 18x speed (to cross 1/5 of circle fast)
-      const speedMul = 1.0 + inBackSm * 17.0;
-      const baseSpeed = rotateSpeed * 0.002;
-      rotAngle += baseSpeed * speedMul;
+      // facing > 0.81 ≈ ±36° from center (1/5 of circle)
+      // Quintic smoothstep for ultra-smooth transition
+      const t = Math.max(0, Math.min(1, (facing - 0.5) / 0.38)); // 0→1 ramp
+      const readable = t * t * t * (t * (t * 6 - 15) + 10);     // quintic ease
+      // readable=1 at front center, 0 everywhere else
+      // Whip: 30x speed when unreadable
+      const speedMul = 1.0 + (1.0 - readable) * 29.0;
+      rotAngle += rotateSpeed * 0.002 * speedMul;
 
       pivot.rotation.y = rotAngle;
 
