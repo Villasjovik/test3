@@ -267,14 +267,14 @@ function initLogo3D(container) {
 
       if (!isTilt) {
         if (motion === 'float-spin') {
-          // Bigger, slower vertical float — signature "floating" feel
-          const floatY = Math.sin(t * 0.6) * 14 + Math.sin(t * 1.3) * 3;
-          const floatX = Math.sin(t * 0.4) * 3;
+          // Pronounced levitation — big vertical travel, visible drift
+          const floatY = Math.sin(t * 0.55) * 38 + Math.sin(t * 1.4) * 6;
+          const floatX = Math.sin(t * 0.35) * 10 + Math.sin(t * 0.8) * 3;
           const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
           pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
           pivot.position.y = floatY;
-          pivot.rotation.x = Math.sin(t * 0.5) * 0.03;
-          pivot.rotation.z = 0;
+          pivot.rotation.x = Math.sin(t * 0.4) * 0.05;
+          pivot.rotation.z = Math.sin(t * 0.3) * 0.025;
         } else {
           const floatX = Math.sin(t * 0.41) * 4 + Math.sin(t * 1.17) * 1.5;
           const floatY = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
