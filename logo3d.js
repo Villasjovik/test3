@@ -111,7 +111,11 @@ function initLogo3D(container) {
 
     // Generous margin: logo must fit at all rotation angles
     const diagW = Math.sqrt(rawSize.x * rawSize.x + depth * depth);
-    const s = Math.min((visW * 0.75) / diagW, (visH * 0.75) / rawSize.y);
+    // Aspect-aware fill: wide logos get more margin
+    const aspect = rawSize.x / rawSize.y; // >1 = wide, <1 = tall
+    const fillW = aspect > 2 ? 0.52 : 0.65; // wide logos like NUURA get smaller fill
+    const fillH = 0.70;
+    const s = Math.min((visW * fillW) / diagW, (visH * fillH) / rawSize.y);
 
     logo.scale.set(s, -s, s); // -s flips Y for SVG coords
 
