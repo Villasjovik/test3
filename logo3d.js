@@ -146,7 +146,7 @@ function initLogo3D(container) {
   // (horizontal plane would be edge-on to front camera = invisible)
   let shadowPlane = null;
   if (hasShadow) {
-    const shadowGeo = new THREE.PlaneGeometry(400, 80);
+    const shadowGeo = new THREE.PlaneGeometry(400, 50);
     const shadowMat = new THREE.ShaderMaterial({
       transparent: true,
       depthWrite: false,
@@ -278,7 +278,7 @@ function initLogo3D(container) {
             const facing = Math.cos(angle); // 1=front, -1=back
             // Narrow readable zone (±41°): accel starts earlier
             // Full speed reached late (~120°): stays fast longer
-            const t = Math.max(0, Math.min(1, (0.75 - facing) / 1.25));
+            const t = Math.max(0, Math.min(1, (0.88 - facing) / 1.45));
             const fast = t * t * t * (t * (t * 6 - 15) + 10); // quintic
             const speedMul = 1.0 + fast * 12.0;
             rotAngle += rotateSpeed * 0.012 * speedMul * easeIn;
@@ -313,6 +313,15 @@ function initLogo3D(container) {
           pivot.rotation.z = Math.cos(t * 0.37) * 0.015;
         }
       }
+    }
+
+    // Dynamic shadow: scales with logo's apparent width during rotation
+    if (shadowPlane && logoBox) {
+      const visW = logoBox.w * Math.abs(Math.cos(rotAngle)) + depth * Math.abs(Math.sin(rotAngle));
+      const targetScale = visW / 380;
+      // Shadow gets slightly more transparent when narrow (logo turned away)
+      shadowPlane.scale.x = Math.max(0.3, targetScale);
+      shadowPlane.material.uniforms.uOpacity.value = 0.35 + (targetScale / (logoBox.w / 380)) * 0.25;
     }
 
     if (updSparks) updSparks(dt, logoBox);
