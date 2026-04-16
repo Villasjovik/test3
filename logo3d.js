@@ -112,6 +112,8 @@ function initLogo3D(container) {
     gold:    { color: 0xd4a84b, metalness: 1.0, roughness: 0.25 },
     pearl:   { color: 0xf5f1eb, metalness: 0.45, roughness: 0.18 },
     porcelain:{color: 0xfafaf6, metalness: 0.0, roughness: 0.12 },
+    onyx:    { color: 0x1a1a1a, metalness: 0.9, roughness: 0.18 },
+    obsidian:{ color: 0x0d0d10, metalness: 0.7, roughness: 0.12 },
     clay:    { color: hexInt(colorHex), metalness: 0.0, roughness: 0.95 },
     emissive:{ color: hexInt(colorHex), emissive: hexInt(colorHex), emissiveIntensity: 0.6, metalness: 0.1, roughness: 0.4 },
   };
@@ -122,6 +124,8 @@ function initLogo3D(container) {
     chrome: 0xffffff,
     pearl: 0xffffff,
     porcelain: 0xffffff,
+    onyx: 0x444444,
+    obsidian: 0x2a2a30,
   };
   const bevelMat = new THREE.MeshStandardMaterial({
     ...preset,
