@@ -146,9 +146,19 @@ max-width:720px;margin-bottom:56px}
 .mq-head{text-align:center;padding-bottom:20px;position:relative;z-index:3}
 .mq-lbl{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(24,19,15,.55);font-weight:600}
 .ticker-wrap{overflow:hidden;position:relative}
-.ticker-track{display:flex;align-items:center;will-change:transform;animation:mqs 36s linear infinite}
+.ticker-track{display:flex;align-items:center;mix-blend-mode:multiply;will-change:transform;animation:mqs 36s linear infinite;perspective:800px}
 .ticker-track:hover{animation-play-state:paused}
-.ticker-item{width:240px;height:100px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0 32px}
+.ticker-item{width:240px;height:100px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0 32px;transform-style:preserve-3d}
+.ticker-item img{width:100%;height:3em;object-fit:contain;opacity:.85;display:block;transform-style:preserve-3d;animation:tk-tilt 7s ease-in-out infinite;transition:opacity .3s}
+.ticker-item:hover img{opacity:1;animation-play-state:paused}
+.ticker-item:nth-child(2n) img{animation-duration:8s;animation-delay:-2s}
+.ticker-item:nth-child(3n) img{animation-duration:6s;animation-delay:-3s}
+.ticker-item:nth-child(5n) img{animation-duration:9s;animation-delay:-1s}
+@keyframes tk-tilt{
+  0%,100%{transform:rotateY(-6deg) rotateX(1.5deg)}
+  33%{transform:rotateY(5deg) rotateX(-1deg)}
+  66%{transform:rotateY(8deg) rotateX(2deg)}
+}
 .tl-up1{transform:scale(1.18)}.tl-up2{transform:scale(1.4)}.tl-up3{transform:scale(2.2)}
 .tl-dn1{transform:scale(0.82)}
 @keyframes mqs{from{transform:translateX(0)}to{transform:translateX(-1920px)}}
@@ -388,23 +398,23 @@ position:relative;overflow:hidden;transition:color .35s}
   </div>
   <div class="ticker-wrap">
     <div class="ticker-track">
-      <div class="ticker-item"><div class="logo-3d" data-svg="./logos-color/Lexington.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item"><div class="logo-3d" data-svg="./logos-color/segway.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item"><div class="logo-3d" data-svg="./logos-color/nuura.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item"><div class="logo-3d" data-svg="./logos-color/mille_notti.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item"><div class="logo-3d" data-svg="./logos-color/tinekhome.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item"><div class="logo-3d" data-svg="./logos-color/markslojd.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item"><div class="logo-3d" data-svg="./logos-color/vedum.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item"><div class="logo-3d" data-svg="./logos-color/husqvarna.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
+      <div class="ticker-item"><img src="https://villasjovik.github.io/velux/logos/lexington.png" alt="Lexington"></div>
+      <div class="ticker-item"><img src="https://villasjovik.github.io/velux/logos/segway.png" alt="Segway"></div>
+      <div class="ticker-item"><img src="https://villasjovik.github.io/velux/logos/nuura.png" alt="Nuura"></div>
+      <div class="ticker-item"><img src="https://villasjovik.github.io/velux/logos/mille_notti.avif" alt="Mille Notti"></div>
+      <div class="ticker-item"><img src="https://villasjovik.github.io/velux/logos/tinekhome.jpg" alt="TineK Home"></div>
+      <div class="ticker-item"><img src="https://villasjovik.github.io/velux/logos/markslojd.avif" alt="Markslöjd"></div>
+      <div class="ticker-item"><img src="https://villasjovik.github.io/velux/logos/vedum.png" alt="Vedum"></div>
+      <div class="ticker-item"><img src="https://villasjovik.github.io/velux/logos/husqvarna.jpg" alt="Husqvarna"></div>
       <!-- dup för sömlös loop -->
-      <div class="ticker-item" aria-hidden="true"><div class="logo-3d" data-svg="./logos-color/Lexington.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item" aria-hidden="true"><div class="logo-3d" data-svg="./logos-color/segway.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item" aria-hidden="true"><div class="logo-3d" data-svg="./logos-color/nuura.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item" aria-hidden="true"><div class="logo-3d" data-svg="./logos-color/mille_notti.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item" aria-hidden="true"><div class="logo-3d" data-svg="./logos-color/tinekhome.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item" aria-hidden="true"><div class="logo-3d" data-svg="./logos-color/markslojd.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item" aria-hidden="true"><div class="logo-3d" data-svg="./logos-color/vedum.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
-      <div class="ticker-item" aria-hidden="true"><div class="logo-3d" data-svg="./logos-color/husqvarna.svg" data-use-svg-color="true" data-mode="tilt" data-bevel-depth="8" data-sparks="false" style="width:200px;height:80px"></div></div>
+      <div class="ticker-item" aria-hidden="true"><img src="https://villasjovik.github.io/velux/logos/lexington.png" alt=""></div>
+      <div class="ticker-item" aria-hidden="true"><img src="https://villasjovik.github.io/velux/logos/segway.png" alt=""></div>
+      <div class="ticker-item" aria-hidden="true"><img src="https://villasjovik.github.io/velux/logos/nuura.png" alt=""></div>
+      <div class="ticker-item" aria-hidden="true"><img src="https://villasjovik.github.io/velux/logos/mille_notti.avif" alt=""></div>
+      <div class="ticker-item" aria-hidden="true"><img src="https://villasjovik.github.io/velux/logos/tinekhome.jpg" alt=""></div>
+      <div class="ticker-item" aria-hidden="true"><img src="https://villasjovik.github.io/velux/logos/markslojd.avif" alt=""></div>
+      <div class="ticker-item" aria-hidden="true"><img src="https://villasjovik.github.io/velux/logos/vedum.png" alt=""></div>
+      <div class="ticker-item" aria-hidden="true"><img src="https://villasjovik.github.io/velux/logos/husqvarna.jpg" alt=""></div>
     </div>
   </div>
 </div>
