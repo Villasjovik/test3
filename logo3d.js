@@ -134,18 +134,15 @@ function initLogo3D(container) {
 
     if (rotateSpeed > 0 && pivot.children.length > 0) {
 
-      // ── SPEED: readable at dead center, ramp starts BEFORE unreadable ──
+      // ── SPEED: smooth power ramp, readable front, fast whip back ──
       const angle = rotAngle % (Math.PI * 2);
       const facing = Math.cos(angle); // 1=front, -1=back
-
-      // Speed curve using exponential: e^(k*(1-facing))
-      // At facing=1 (front): e^0 = 1x
-      // At facing=0 (side, already hard to read): e^3.5 ≈ 33x
-      // At facing=-1 (back): e^7 ≈ 1097x (instant whip)
-      const speedMul = Math.exp(3.5 * (1.0 - facing));
-      // Clamp and normalize so front = crawl, back = whip
-      const normalizedSpeed = Math.min(speedMul, 800);
-      rotAngle += rotateSpeed * 0.0008 * normalizedSpeed;
+      // offCenter: 0 at front, 1 at back
+      const offCenter = (1.0 - facing) * 0.5;
+      // Cubic power curve: gentle start, aggressive ramp
+      // front=1x, ±60°=3x, ±90°=8x, back=28x
+      const speedMul = 1.0 + offCenter * offCenter * offCenter * 27.0;
+      rotAngle += rotateSpeed * 0.006 * speedMul;
 
       pivot.rotation.y = rotAngle;
 
