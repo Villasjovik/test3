@@ -66,8 +66,10 @@ body.shrink .h-lockup{transform:scale(1)}
 body.shrink .h-eyebrow{opacity:1;transform:none;transition-delay:1.3s}
 body.shrink .h-tagline{opacity:1;transform:none;transition-delay:1.6s}
 body.shrink .h-scroll{opacity:1;transform:none;transition-delay:1.9s}
-/* 3D logos visible immediately (no fade, they slide in) */
-.logo-3d{opacity:1}
+/* 3D logos start hidden to avoid white flash before first render */
+.logo-3d{opacity:0;background:transparent;transition:opacity .4s .4s ease}
+.logo-3d canvas{background:transparent!important}
+body.slide-in .logo-3d{opacity:1}
 /* × design: tall italic, gold with warm glow */
 .h-x{
   font-family:'Playfair Display',serif;font-style:italic;font-weight:400;
