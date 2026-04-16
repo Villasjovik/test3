@@ -49,15 +49,15 @@ body.ct #cur-r{width:2px;height:26px;border-radius:2px}
 .gd{height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,75,.55) 25%,rgba(212,168,75,.9) 50%,rgba(212,168,75,.55) 75%,transparent);transform-origin:center;transform:scaleX(0);opacity:0;transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .5s ease}
 .gd.vis{transform:scaleX(1);opacity:1}
 
-/* ── INTRO: scale-down from big to hero size ── */
-.h-lockup{transform:scale(1.8);transition:transform 1.8s 2s cubic-bezier(.16,1,.3,1)}
+/* ── INTRO: start big + spinning, shrink to hero ── */
+.h-lockup{transform:scale(1.8);transition:transform 2.2s cubic-bezier(.16,1,.3,1)}
 body.shrink .h-lockup{transform:scale(1)}
 /* Hide hero text until after shrink */
 .h-eyebrow,.h-tagline,.h-scroll{opacity:0;transform:translateY(20px);
   transition:opacity .8s var(--ease),transform .8s var(--ease)}
-body.shrink .h-eyebrow{opacity:1;transform:none;transition-delay:3.2s}
-body.shrink .h-tagline{opacity:1;transform:none;transition-delay:3.5s}
-body.shrink .h-scroll{opacity:1;transform:none;transition-delay:3.8s}
+body.shrink .h-eyebrow{opacity:1;transform:none;transition-delay:1.8s}
+body.shrink .h-tagline{opacity:1;transform:none;transition-delay:2.1s}
+body.shrink .h-scroll{opacity:1;transform:none;transition-delay:2.4s}
 /* 3D logos fade in immediately */
 .logo-3d{opacity:0;transition:opacity 1s .2s var(--ease)}
 body.body-loaded .logo-3d{opacity:1}
@@ -314,7 +314,7 @@ position:relative;overflow:hidden;transition:color .35s}
              data-rotate-speed="0.3"
              data-bevel-depth="18"
              data-sparks="true"
-             data-delay="2.5"
+             data-delay="0"
              data-nudge-x="-12"
              style="width:34vw;height:22vw;max-width:420px;max-height:280px">
         </div>
@@ -327,7 +327,7 @@ position:relative;overflow:hidden;transition:color .35s}
              data-rotate-speed="0.3"
              data-bevel-depth="22"
              data-sparks="true"
-             data-delay="2.5"
+             data-delay="0"
              data-nudge-x="28"
              style="width:42vw;height:18vw;max-width:540px;max-height:220px">
         </div>
@@ -531,12 +531,9 @@ position:relative;overflow:hidden;transition:color .35s}
 <script>
 'use strict';
 
-/* ── INTRO: big logos → shrink to hero ── */
-// Shrink trigger after logos have loaded
-setTimeout(()=>{
-  document.body.classList.add('shrink');
-  dot.style.opacity='1'; ring.style.opacity='1';
-}, 100);
+/* ── INTRO: spin big → shrink to hero ── */
+setTimeout(()=>{ dot.style.opacity='1'; ring.style.opacity='1'; }, 500);
+setTimeout(()=>document.body.classList.add('shrink'), 3000);
 
 /* ── BODY LOADED ── */
 requestAnimationFrame(()=>document.body.classList.add('body-loaded'));
