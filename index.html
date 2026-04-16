@@ -180,7 +180,7 @@ background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:
 
 /* ══ LEVERANSEN ════════════════════════════════ */
 #sec-lev{position:relative;background:linear-gradient(180deg,var(--brn2) 0%,var(--brn) 100%);padding:96px 24px;overflow:hidden}
-#sec-lev.leather::after,#sec-pr.leather::after{opacity:.03}
+/* leather opacity tuned per section */
 .lev-orb{position:absolute;border-radius:50%;filter:blur(130px);pointer-events:none}
 .lev-orb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(1,142,71,.14),transparent);top:-160px;right:-120px;animation:orbf 26s ease-in-out infinite}
 .lev-inner{position:relative;z-index:1;max-width:980px;margin:0 auto}
@@ -213,10 +213,10 @@ z-index:2;pointer-events:none;text-align:center;padding:0 24px}
 
 /* ── LEATHER TEXTURE OVERLAY (brown sections) ── */
 .leather::after{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg width='64' height='44' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='2' width='27' height='17' rx='7' ry='7' fill='none' stroke='%23fff' stroke-width='.6'/%3E%3Crect x='35' y='2' width='27' height='17' rx='7' ry='7' fill='none' stroke='%23fff' stroke-width='.6'/%3E%3Crect x='18' y='24' width='27' height='17' rx='7' ry='7' fill='none' stroke='%23fff' stroke-width='.6'/%3E%3Crect x='-14' y='24' width='27' height='17' rx='7' ry='7' fill='none' stroke='%23fff' stroke-width='.6'/%3E%3Crect x='50' y='24' width='27' height='17' rx='7' ry='7' fill='none' stroke='%23fff' stroke-width='.6'/%3E%3C/svg%3E");
-  background-size:64px 44px;
-  mix-blend-mode:overlay
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.12;
+  background-image:url("data:image/svg+xml,%3Csvg width='80' height='56' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='2' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.04)' stroke='rgba(255,255,255,.15)' stroke-width='.8'/%3E%3Crect x='43' y='2' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.03)' stroke='rgba(255,255,255,.12)' stroke-width='.8'/%3E%3Crect x='22' y='30' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.035)' stroke='rgba(255,255,255,.14)' stroke-width='.8'/%3E%3Crect x='-18' y='30' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.03)' stroke='rgba(255,255,255,.12)' stroke-width='.8'/%3E%3Crect x='62' y='30' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.04)' stroke='rgba(255,255,255,.13)' stroke-width='.8'/%3E%3C/svg%3E");
+  background-size:80px 56px;
+  mix-blend-mode:soft-light
 }
 
 /* ══ PRICING ════════════════════════════════════ */
