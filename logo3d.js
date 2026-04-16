@@ -110,14 +110,22 @@ function initLogo3D(container) {
     rubber:  { color: hexInt(colorHex), metalness: 0.0, roughness: 0.85 },
     chrome:  { color: 0xe8e8e8, metalness: 1.0, roughness: 0.05 },
     gold:    { color: 0xd4a84b, metalness: 1.0, roughness: 0.25 },
+    pearl:   { color: 0xf5f1eb, metalness: 0.45, roughness: 0.18 },
+    porcelain:{color: 0xfafaf6, metalness: 0.0, roughness: 0.12 },
     clay:    { color: hexInt(colorHex), metalness: 0.0, roughness: 0.95 },
     emissive:{ color: hexInt(colorHex), emissive: hexInt(colorHex), emissiveIntensity: 0.6, metalness: 0.1, roughness: 0.4 },
   };
   const preset = presets[material] || presets.default;
   const frontMat = new THREE.MeshStandardMaterial(preset);
+  const bevelColors = {
+    gold: 0xf0c878,
+    chrome: 0xffffff,
+    pearl: 0xffffff,
+    porcelain: 0xffffff,
+  };
   const bevelMat = new THREE.MeshStandardMaterial({
     ...preset,
-    color: material === 'gold' ? 0xf0c878 : material === 'chrome' ? 0xffffff : darken('#'+(preset.color).toString(16).padStart(6,'0'), 0.08),
+    color: bevelColors[material] || darken('#'+(preset.color).toString(16).padStart(6,'0'), 0.08),
     roughness: Math.max(0.02, (preset.roughness || 0.28) - 0.1)
   });
 
