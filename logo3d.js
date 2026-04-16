@@ -42,6 +42,7 @@ function initLogo3D(container) {
   const nudgeX = parseFloat(container.dataset.nudgeX || '0');
   const mode = container.dataset.mode || 'spin';
   const isTilt = mode === 'tilt';
+  const motion = container.dataset.motion || 'default'; // 'default' | 'float-spin'
   const material = container.dataset.material || 'default'; // gold, chrome, plastic, metal, glass
   const hasShadow = container.dataset.shadow !== 'false';
 
@@ -244,28 +245,45 @@ function initLogo3D(container) {
         pivot.position.x = Math.sin(t * 0.15 + phase * 0.8) * 0.8;
 
       } else if (rotateSpeed > 0) {
-        // ── SPIN MODE ──
         const timeSinceStart = elapsed - rotDelay;
         if (timeSinceStart > 0) {
           const easeInT = Math.min(1, timeSinceStart / 1.5);
           const easeIn = easeInT * easeInT * (3 - 2 * easeInT);
-          const angle = rotAngle % (Math.PI * 2);
-          const facing = Math.cos(angle);
-          const offCenter = (1.0 - facing) * 0.5;
-          const speedMul = 1.0 + offCenter * offCenter * 45.0;
-          rotAngle += rotateSpeed * 0.006 * speedMul * easeIn;
+
+          if (motion === 'float-spin') {
+            // ── FLOAT + SPIN: constant rotation, pronounced float ──
+            rotAngle += rotateSpeed * 0.012 * easeIn;
+          } else {
+            // ── DEFAULT: variable speed (slow front, fast back) ──
+            const angle = rotAngle % (Math.PI * 2);
+            const facing = Math.cos(angle);
+            const offCenter = (1.0 - facing) * 0.5;
+            const speedMul = 1.0 + offCenter * offCenter * 45.0;
+            rotAngle += rotateSpeed * 0.006 * speedMul * easeIn;
+          }
           pivot.rotation.y = rotAngle;
         }
       }
 
       if (!isTilt) {
-        const floatX = Math.sin(t * 0.41) * 4 + Math.sin(t * 1.17) * 1.5;
-        const floatY = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
-        const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
-        pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
-        pivot.position.y = floatY;
-        pivot.rotation.x = Math.sin(t * 0.29) * 0.02 + Math.sin(t * 0.67) * 0.01;
-        pivot.rotation.z = Math.cos(t * 0.37) * 0.015;
+        if (motion === 'float-spin') {
+          // Bigger, slower vertical float — signature "floating" feel
+          const floatY = Math.sin(t * 0.6) * 14 + Math.sin(t * 1.3) * 3;
+          const floatX = Math.sin(t * 0.4) * 3;
+          const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
+          pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
+          pivot.position.y = floatY;
+          pivot.rotation.x = Math.sin(t * 0.5) * 0.03;
+          pivot.rotation.z = 0;
+        } else {
+          const floatX = Math.sin(t * 0.41) * 4 + Math.sin(t * 1.17) * 1.5;
+          const floatY = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
+          const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
+          pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
+          pivot.position.y = floatY;
+          pivot.rotation.x = Math.sin(t * 0.29) * 0.02 + Math.sin(t * 0.67) * 0.01;
+          pivot.rotation.z = Math.cos(t * 0.37) * 0.015;
+        }
       }
     }
 
