@@ -84,13 +84,16 @@ background:radial-gradient(ellipse 90% 80% at 50% 50%,var(--bg3) 0%,var(--bg) 70
 background-image:radial-gradient(circle,rgba(212,168,75,.05) 1px,transparent 1px);background-size:28px 28px}
 .h-content{position:relative;z-index:2;padding:110px 24px 100px;display:flex;flex-direction:column;align-items:center}
 .h-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:52px}
-.h-lockup{display:flex;flex-direction:row;align-items:center;gap:8px;flex-wrap:nowrap;justify-content:center;margin-bottom:56px;position:relative}
+.h-lockup{display:flex;flex-direction:row;align-items:center;gap:0;flex-wrap:nowrap;justify-content:center;margin-bottom:56px;position:relative;width:100%}
+.h-side{flex:1;display:flex;min-width:0}
+.h-side-l{justify-content:flex-end}
+.h-side-r{justify-content:flex-start}
 .h-lockup::after{content:'';position:absolute;width:500px;height:130px;left:50%;top:50%;transform:translate(-50%,-50%);
 border-radius:50%;background:radial-gradient(ellipse,rgba(212,168,75,.09),transparent 70%);
 pointer-events:none;animation:haloPulse 4s ease-in-out infinite}
 @keyframes haloPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
 .h-vs{height:clamp(52px,8vw,100px);object-fit:contain;filter:brightness(0) invert(1) drop-shadow(0 0 20px rgba(255,255,255,.12))}
-.h-x{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(28px,4vw,52px);color:var(--gold);line-height:1;flex-shrink:0;align-self:center;margin:0 8px}
+.h-x{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(28px,4vw,52px);color:var(--gold);line-height:1;flex-shrink:0;align-self:center;margin:0 16px}
 .h-brand{height:clamp(22px,3vw,38px);object-fit:contain;filter:brightness(0) invert(1) drop-shadow(0 0 16px rgba(255,255,255,.1))}
 .h-tagline{font-family:'Playfair Display',serif;font-size:clamp(24px,3.8vw,48px);font-weight:400;line-height:1.2;
 max-width:720px;margin-bottom:56px}
@@ -304,24 +307,28 @@ position:relative;overflow:hidden;transition:color .35s}
   <div class="h-content">
     <p class="h-eyebrow">Samarbetsförslag &middot; 2026</p>
     <div class="h-lockup">
-      <div class="logo-3d hero-logo-vs"
-           data-svg="./villasjovik.svg"
-           data-color="#f2ede4"
-           data-rotate-speed="0.3"
-           data-bevel-depth="18"
-           data-sparks="true"
-           data-delay="4"
-           style="width:36vw;height:24vw;max-width:440px;max-height:300px">
+      <div class="h-side h-side-l">
+        <div class="logo-3d hero-logo-vs"
+             data-svg="./villasjovik.svg"
+             data-color="#f2ede4"
+             data-rotate-speed="0.3"
+             data-bevel-depth="18"
+             data-sparks="true"
+             data-delay="4"
+             style="width:34vw;height:22vw;max-width:420px;max-height:280px">
+        </div>
       </div>
       <span class="h-x">&times;</span>
-      <div class="logo-3d hero-logo-brand"
-           data-svg="./nuura.svg"
-           data-color="#f2ede4"
-           data-rotate-speed="0.3"
-           data-bevel-depth="22"
-           data-sparks="true"
-           data-delay="4"
-           style="width:28vw;height:10vw;max-width:360px;max-height:130px">
+      <div class="h-side h-side-r">
+        <div class="logo-3d hero-logo-brand"
+             data-svg="./nuura.svg"
+             data-color="#f2ede4"
+             data-rotate-speed="0.3"
+             data-bevel-depth="22"
+             data-sparks="true"
+             data-delay="4"
+             style="width:28vw;height:10vw;max-width:360px;max-height:130px">
+        </div>
       </div>
     </div>
     <h1 class="h-tagline">Era produkter. <em>I 164 000 engagerade</em> följares flöde.</h1>
