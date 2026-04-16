@@ -315,13 +315,18 @@ function initLogo3D(container) {
       }
     }
 
-    // Dynamic shadow: scales with logo's apparent width during rotation
+    // Dynamic shadow: tracks logo X position + scales with rotation
     if (shadowPlane && logoBox) {
       const visW = logoBox.w * Math.abs(Math.cos(rotAngle)) + depth * Math.abs(Math.sin(rotAngle));
+      const fullScale = logoBox.w / 380;
       const targetScale = visW / 380;
-      // Shadow gets slightly more transparent when narrow (logo turned away)
-      shadowPlane.scale.x = Math.max(0.3, targetScale);
-      shadowPlane.material.uniforms.uOpacity.value = 0.35 + (targetScale / (logoBox.w / 380)) * 0.25;
+      // Follow logo X-offset (nudgeX, depth compensation)
+      shadowPlane.position.x = pivot.position.x;
+      // Shrink shadow more when sideways (down to 12%)
+      shadowPlane.scale.x = Math.max(0.12, targetScale);
+      // Opacity: 0.65 when full width, 0.2 when sideways
+      const widthRatio = targetScale / fullScale;
+      shadowPlane.material.uniforms.uOpacity.value = 0.2 + widthRatio * 0.45;
     }
 
     if (updSparks) updSparks(dt, logoBox);
