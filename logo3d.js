@@ -261,8 +261,16 @@ function initLogo3D(container) {
           const easeIn = easeInT * easeInT * (3 - 2 * easeInT);
 
           if (motion === 'float-spin') {
-            // ── FLOAT + SPIN: constant rotation, pronounced float ──
-            rotAngle += rotateSpeed * 0.012 * easeIn;
+            // ── FLOAT + SPIN: variable speed (slow readable 1/3, fast back 2/3) ──
+            const angle = rotAngle % (Math.PI * 2);
+            const facing = Math.cos(angle); // 1=front, -1=back
+            // Readable zone: facing > 0.5 (~±60°, 1/3 of circle)
+            // Quintic smoothstep for ultra-smooth ramp between zones
+            const t = Math.max(0, Math.min(1, (0.5 - facing) / 0.9));
+            const fast = t * t * t * (t * (t * 6 - 15) + 10); // 0=readable, 1=back
+            // 1x at front (slow/readable), 18x at back (fast)
+            const speedMul = 1.0 + fast * 17.0;
+            rotAngle += rotateSpeed * 0.005 * speedMul * easeIn;
           } else {
             // ── DEFAULT: variable speed (slow front, fast back) ──
             const angle = rotAngle % (Math.PI * 2);
