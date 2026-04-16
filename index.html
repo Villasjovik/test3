@@ -212,9 +212,9 @@ z-index:2;pointer-events:none;text-align:center;padding:0 24px}
 .px-hl em{font-style:italic;color:var(--gold)}
 
 /* ── LEATHER TEXTURE OVERLAY (brown sections) ── */
-.leather::after{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.12;
-  background-image:url("data:image/svg+xml,%3Csvg width='80' height='56' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='2' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.04)' stroke='rgba(255,255,255,.15)' stroke-width='.8'/%3E%3Crect x='43' y='2' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.03)' stroke='rgba(255,255,255,.12)' stroke-width='.8'/%3E%3Crect x='22' y='30' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.035)' stroke='rgba(255,255,255,.14)' stroke-width='.8'/%3E%3Crect x='-18' y='30' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.03)' stroke='rgba(255,255,255,.12)' stroke-width='.8'/%3E%3Crect x='62' y='30' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.04)' stroke='rgba(255,255,255,.13)' stroke-width='.8'/%3E%3C/svg%3E");
+.leather-tex{
+  position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.15;
+  background-image:url("data:image/svg+xml,%3Csvg width='80' height='56' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='2' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.05)' stroke='rgba(255,255,255,.18)' stroke-width='.8'/%3E%3Crect x='43' y='2' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.04)' stroke='rgba(255,255,255,.15)' stroke-width='.8'/%3E%3Crect x='22' y='30' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.045)' stroke='rgba(255,255,255,.17)' stroke-width='.8'/%3E%3Crect x='-18' y='30' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.04)' stroke='rgba(255,255,255,.15)' stroke-width='.8'/%3E%3Crect x='62' y='30' width='35' height='22' rx='8' ry='8' fill='rgba(255,255,255,.05)' stroke='rgba(255,255,255,.16)' stroke-width='.8'/%3E%3C/svg%3E");
   background-size:80px 56px;
   mix-blend-mode:soft-light
 }
@@ -432,8 +432,9 @@ position:relative;overflow:hidden;transition:color .35s}
 <div class="gd"></div>
 
 <!-- ══ LEVERANSEN ════════════════════════════════════ -->
-<section id="sec-lev" class="leather">
+<section id="sec-lev">
   <div class="lev-orb lev-orb-1" aria-hidden="true"></div>
+  <div class="leather-tex" aria-hidden="true"></div>
   <div class="lev-inner">
     <p class="sec-lbl rv">Vad som ingår</p>
     <h2 class="sec-h2 rv">Välj det upplägg <em>som passar er.</em></h2>
@@ -480,8 +481,9 @@ position:relative;overflow:hidden;transition:color .35s}
 <div class="gd"></div>
 
 <!-- ══ PRICING ══════════════════════════════════════ -->
-<section id="sec-pr" class="leather">
+<section id="sec-pr">
   <div class="pr-orb pr-orb-1" aria-hidden="true"></div>
+  <div class="leather-tex" aria-hidden="true"></div>
   <div class="pr-inner">
     <p class="sec-lbl rv">Investering</p>
     <h2 class="sec-h2 rv">Ni levererar produkterna. <em>Vi levererar resten.</em></h2>
