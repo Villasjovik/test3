@@ -265,12 +265,11 @@ function initLogo3D(container) {
             const angle = rotAngle % (Math.PI * 2);
             const facing = Math.cos(angle); // 1=front, -1=back
             // Readable zone: facing > 0.5 (~±60°, 1/3 of circle)
-            // Quintic smoothstep for ultra-smooth ramp between zones
             const t = Math.max(0, Math.min(1, (0.5 - facing) / 0.9));
-            const fast = t * t * t * (t * (t * 6 - 15) + 10); // 0=readable, 1=back
-            // 1x at front (slow/readable), 18x at back (fast)
-            const speedMul = 1.0 + fast * 17.0;
-            rotAngle += rotateSpeed * 0.005 * speedMul * easeIn;
+            const fast = t * t * t * (t * (t * 6 - 15) + 10); // quintic
+            // 1x slow at front, 35x fast at back — pronounced contrast
+            const speedMul = 1.0 + fast * 34.0;
+            rotAngle += rotateSpeed * 0.008 * speedMul * easeIn;
           } else {
             // ── DEFAULT: variable speed (slow front, fast back) ──
             const angle = rotAngle % (Math.PI * 2);
