@@ -133,27 +133,32 @@ function initLogo3D(container) {
     const dt = Math.min(clock.getDelta(), 0.05);
     elapsed += dt;
 
-    if (rotateSpeed > 0 && pivot.children.length > 0 && elapsed > rotDelay) {
+    if (rotateSpeed > 0 && pivot.children.length > 0) {
 
-      // ── SPEED: smooth power ramp, readable front, fast whip back ──
-      const angle = rotAngle % (Math.PI * 2);
-      const facing = Math.cos(angle); // 1=front, -1=back
-      // offCenter: 0 at front, 1 at back
-      const offCenter = (1.0 - facing) * 0.5;
-      // Cubic power curve: gentle start, aggressive ramp
-      // front=1x, ±60°=3x, ±90°=8x, back=28x
-      const speedMul = 1.0 + offCenter * offCenter * offCenter * 27.0;
-      rotAngle += rotateSpeed * 0.006 * speedMul;
+      // ── ROTATION START: ease in from static ──
+      // Logo starts facing forward (angle=0), rotation eases in after delay
+      const timeSinceStart = elapsed - rotDelay;
+      const canRotate = timeSinceStart > 0;
 
-      pivot.rotation.y = rotAngle;
+      if (canRotate) {
+        // Smooth ease-in over 3 seconds
+        const easeInT = Math.min(1, timeSinceStart / 3.0);
+        const easeIn = easeInT * easeInT * (3 - 2 * easeInT); // smoothstep
 
-      // ── FLOATING PHYSICS ──
-      // Multiple sine waves at irrational frequencies for organic feel
+        // ── SPEED CURVE: cubic ramp, front slow, back whip ──
+        const angle = rotAngle % (Math.PI * 2);
+        const facing = Math.cos(angle);
+        const offCenter = (1.0 - facing) * 0.5;
+        const speedMul = 1.0 + offCenter * offCenter * offCenter * 27.0;
+
+        rotAngle += rotateSpeed * 0.006 * speedMul * easeIn;
+        pivot.rotation.y = rotAngle;
+      }
+
+      // ── FLOATING PHYSICS (always active, even before rotation) ──
       const t = elapsed;
       pivot.position.x = Math.sin(t * 0.41) * 4 + Math.sin(t * 1.17) * 1.5;
       pivot.position.y = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
-
-      // Ultra-subtle tilt variation (organic, not mechanical)
       pivot.rotation.x = Math.sin(t * 0.29) * 0.02 + Math.sin(t * 0.67) * 0.01;
       pivot.rotation.z = Math.cos(t * 0.37) * 0.015;
     }
