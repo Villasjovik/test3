@@ -67,7 +67,7 @@ function initLogo3D(container) {
   if (!isTransparent) scene.background = new THREE.Color(bgColor);
 
   const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 5000);
-  camera.position.set(0, 0, 900);
+  camera.position.set(0, 0, 1050);
 
   scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
 
