@@ -150,11 +150,12 @@ function initLogo3D(container) {
         const easeInT = Math.min(1, timeSinceStart / 5.0);
         const easeIn = easeInT * easeInT * (3 - 2 * easeInT); // smoothstep
 
-        // ── SPEED CURVE: cubic ramp, front slow, back whip ──
+        // ── SPEED CURVE: quadratic ramp, starts earlier, stays fast longer ──
         const angle = rotAngle % (Math.PI * 2);
         const facing = Math.cos(angle);
         const offCenter = (1.0 - facing) * 0.5;
-        const speedMul = 1.0 + offCenter * offCenter * offCenter * 27.0;
+        // ±30°=1.2x, ±45°=2x, ±60°=4x, ±90°=12x, back=46x
+        const speedMul = 1.0 + offCenter * offCenter * 45.0;
 
         rotAngle += rotateSpeed * 0.006 * speedMul * easeIn;
         pivot.rotation.y = rotAngle;
