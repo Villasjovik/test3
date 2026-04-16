@@ -266,6 +266,7 @@ background-image:radial-gradient(circle,rgba(212,168,75,.05) 1px,transparent 1px
 #sec-cta .cta-l2{font-size:clamp(52px,9.5vw,140px)}
 #sec-cta h2 em{font-style:italic;color:var(--gold)}
 .cta-sub{font-size:15px;color:var(--muted);max-width:400px;margin:0 auto 48px;line-height:1.8}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 .mag-w{display:inline-block}
 .mag-btn{display:inline-flex;align-items:center;gap:10px;padding:18px 44px;
 border:1.5px solid var(--gold);border-radius:100px;font-size:11px;font-weight:600;
@@ -275,6 +276,11 @@ position:relative;overflow:hidden;transition:color .35s}
 .mag-btn:hover::before{transform:scale(1)}
 .mag-btn span{position:relative;z-index:1}
 .mag-btn:hover{color:var(--bg)}
+.mag-btn.filled{background:var(--gold);color:var(--bg)}
+.mag-btn.filled::before{display:none}
+.mag-btn.filled:hover{background:var(--gold2)}
+.mag-btn.ghost{background:transparent;border-color:rgba(212,168,75,.5)}
+.mag-btn.ghost:hover{border-color:var(--gold)}
 .cta-div{width:1px;height:52px;background:linear-gradient(180deg,var(--gold),transparent);margin:52px auto 0}
 .cta-con{margin-top:26px}
 .cta-name{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:6px}
@@ -541,11 +547,17 @@ position:relative;overflow:hidden;transition:color .35s}
       <span class="cta-l1">Ska vi</span><br>
       <em class="cta-l2">köra igång?</em>
     </h2>
-    <p class="cta-sub rv">Hör av dig så tar vi fram ett konkret förslag anpassat för er.</p>
-    <div class="mag-w rv">
-      <a class="mag-btn ch" href="mailto:carin@villasjovik.se?subject=NUURA%20%C3%97%20Villa%20Sj%C3%B6vik%20%E2%80%94%20Samarbete%202026">
-        <span>Skicka mail &rarr;</span>
-      </a>
+    <div class="cta-btns rv">
+      <div class="mag-w">
+        <a class="mag-btn filled ch" href="mailto:carin@villasjovik.se?subject=NUURA%20%C3%97%20Villa%20Sj%C3%B6vik%20%E2%80%94%20Samarbete%202026">
+          <span>Skicka mail &rarr;</span>
+        </a>
+      </div>
+      <div class="mag-w">
+        <a class="mag-btn ghost ch" href="mailto:carin@villasjovik.se?subject=Boka%20m%C3%B6te%20%E2%80%94%20NUURA%20%C3%97%20Villa%20Sj%C3%B6vik">
+          <span>Boka möte</span>
+        </a>
+      </div>
     </div>
     <div class="cta-div" aria-hidden="true"></div>
     <div class="cta-con rv">
@@ -608,8 +620,9 @@ gsap.from('#sec-cta h2',{y:60,opacity:0,duration:1,ease:'power2.out',
   scrollTrigger:{trigger:'#sec-cta',start:'top 70%',once:true}});
 
 // Magnetic button
-const magW=document.querySelector('.mag-w'),magB=document.querySelector('.mag-btn');
-if(magW){
+document.querySelectorAll('.mag-w').forEach(magW=>{
+  const magB=magW.querySelector('.mag-btn');
+  if(!magB)return;
   magW.addEventListener('mousemove',e=>{
     const r=magW.getBoundingClientRect();
     const x=(e.clientX-r.left-r.width/2)*.35;
@@ -617,7 +630,7 @@ if(magW){
     gsap.to(magB,{x,y,duration:.4,ease:'power2.out'});
   });
   magW.addEventListener('mouseleave',()=>gsap.to(magB,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'}));
-}
+});
 
 /* ── INTERSECTION OBSERVERS ── */
 // Reveal
