@@ -63,9 +63,9 @@ body.shrink .h-lockup{transform:scale(1)}
 /* Hero text after shrink */
 .h-eyebrow,.h-tagline,.h-scroll{opacity:0;transform:translateY(20px);
   transition:opacity .8s var(--ease),transform .8s var(--ease)}
-body.shrink .h-eyebrow{opacity:1;transform:none;transition-delay:2.8s}
-body.shrink .h-tagline{opacity:1;transform:none;transition-delay:3.1s}
-body.shrink .h-scroll{opacity:1;transform:none;transition-delay:3.4s}
+body.shrink .h-eyebrow{opacity:1;transform:none;transition-delay:1.3s}
+body.shrink .h-tagline{opacity:1;transform:none;transition-delay:1.6s}
+body.shrink .h-scroll{opacity:1;transform:none;transition-delay:1.9s}
 /* 3D logos visible immediately (no fade, they slide in) */
 .logo-3d{opacity:1}
 /* × design: tall italic, gold with warm glow */
@@ -556,7 +556,7 @@ setTimeout(()=>{ dot.style.opacity='1'; ring.style.opacity='1'; }, 500);
 // Phase 1: logos slide in from edges (already spinning)
 setTimeout(()=>document.body.classList.add('slide-in'), 200);
 // Phase 2: shrink from big to final hero size
-setTimeout(()=>document.body.classList.add('shrink'), 3900);
+setTimeout(()=>document.body.classList.add('shrink'), 2500);
 
 /* ── BODY LOADED ── */
 requestAnimationFrame(()=>document.body.classList.add('body-loaded'));
