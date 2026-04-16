@@ -83,16 +83,30 @@ function initLogo3D(container) {
   const pivot = new THREE.Group();
   scene.add(pivot);
 
+  const useColorFromSvg = container.dataset.useSvgColor === 'true';
+
   new SVGLoader().load(svgPath, (data) => {
     const logo = new THREE.Group();
 
     for (const path of data.paths) {
+      // Use SVG's own fill color when requested, else use data-color
+      let pathFront = frontMat, pathBevel = bevelMat;
+      if (useColorFromSvg && path.color) {
+        const c = path.color.getHex();
+        pathFront = new THREE.MeshStandardMaterial({
+          color: c, metalness: 0.25, roughness: 0.35
+        });
+        pathBevel = new THREE.MeshStandardMaterial({
+          color: darken('#' + c.toString(16).padStart(6,'0'), 0.1),
+          metalness: 0.4, roughness: 0.15
+        });
+      }
       for (const shape of SVGLoader.createShapes(path)) {
         logo.add(new THREE.Mesh(
           new THREE.ExtrudeGeometry(shape, {
             depth, bevelEnabled:true, bevelThickness:3, bevelSize:1.8, bevelSegments:6
           }),
-          [frontMat, bevelMat]
+          [pathFront, pathBevel]
         ));
       }
     }
