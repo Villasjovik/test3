@@ -130,26 +130,29 @@ function initLogo3D(container) {
   const pivot = new THREE.Group();
   scene.add(pivot);
 
-  // GROUND SHADOW — soft radial gradient below logo
+  // GROUND SHADOW — vertical elliptical gradient facing camera
+  // (horizontal plane would be edge-on to front camera = invisible)
   let shadowPlane = null;
   if (hasShadow) {
-    const shadowGeo = new THREE.CircleGeometry(200, 32);
+    const shadowGeo = new THREE.PlaneGeometry(400, 80);
     const shadowMat = new THREE.ShaderMaterial({
       transparent: true,
       depthWrite: false,
-      uniforms: { uOpacity: { value: 0.4 } },
+      uniforms: { uOpacity: { value: 0.55 } },
       vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }`,
       fragmentShader: `
         varying vec2 vUv;
         uniform float uOpacity;
         void main(){
-          float d = length(vUv - 0.5) * 2.0;
-          float a = smoothstep(1.0, 0.0, d) * smoothstep(1.0, 0.6, d);
+          // Elongated horizontal ellipse — like a real ground shadow viewed from front
+          vec2 p = (vUv - 0.5) * 2.0;
+          float d = length(vec2(p.x * 0.7, p.y * 2.5));
+          float a = smoothstep(1.0, 0.0, d);
           gl_FragColor = vec4(0.0, 0.0, 0.0, a * uOpacity);
         }`
     });
     shadowPlane = new THREE.Mesh(shadowGeo, shadowMat);
-    shadowPlane.rotation.x = -Math.PI / 2;
+    // No rotation — keep it facing the camera
     scene.add(shadowPlane);
   }
 
@@ -227,8 +230,9 @@ function initLogo3D(container) {
     if (shadowPlane) {
       shadowPlane.position.y = shadowYAbs != null
         ? parseFloat(shadowYAbs)
-        : -fSize.y / 2 - 90 + yOffset;
-      shadowPlane.scale.set(fSize.x / 220, 1, fSize.x / 220);
+        : -fSize.y / 2 - 50 + yOffset;
+      // scale width to match logo, keep height proportional
+      shadowPlane.scale.set(fSize.x / 380, 1, 1);
     }
   });
 
