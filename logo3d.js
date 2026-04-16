@@ -39,6 +39,7 @@ function initLogo3D(container) {
   const bgColor = container.dataset.bg || 'transparent';
   const hasSparks = container.dataset.sparks !== 'false';
   const rotDelay = parseFloat(container.dataset.delay || '0');
+  const nudgeX = parseFloat(container.dataset.nudgeX || '0'); // push logo away from ×
 
   try { const c=document.createElement('canvas'); if(!c.getContext('webgl2')&&!c.getContext('webgl'))throw 0; }
   catch { if(fallback) container.innerHTML=`<img src="${fallback}" style="width:100%;height:100%;object-fit:contain;">`; return; }
@@ -161,8 +162,14 @@ function initLogo3D(container) {
 
       // ── FLOATING PHYSICS (always active, even before rotation) ──
       const t = elapsed;
-      pivot.position.x = Math.sin(t * 0.41) * 4 + Math.sin(t * 1.17) * 1.5;
-      pivot.position.y = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
+      // Base float
+      const floatX = Math.sin(t * 0.41) * 4 + Math.sin(t * 1.17) * 1.5;
+      const floatY = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
+      // Dynamic X compensation: push logo away from center by nudgeX
+      // plus compensate for depth expansion during rotation
+      const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
+      pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
+      pivot.position.y = floatY;
       pivot.rotation.x = Math.sin(t * 0.29) * 0.02 + Math.sin(t * 0.67) * 0.01;
       pivot.rotation.z = Math.cos(t * 0.37) * 0.015;
     }
