@@ -146,8 +146,8 @@ function initLogo3D(container) {
       const canRotate = timeSinceStart > 0;
 
       if (canRotate) {
-        // Smooth ease-in over 3 seconds
-        const easeInT = Math.min(1, timeSinceStart / 3.0);
+        // Smooth ease-in over 5 seconds
+        const easeInT = Math.min(1, timeSinceStart / 5.0);
         const easeIn = easeInT * easeInT * (3 - 2 * easeInT); // smoothstep
 
         // ── SPEED CURVE: cubic ramp, front slow, back whip ──
