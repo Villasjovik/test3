@@ -50,9 +50,9 @@ function initLogo3D(container) {
   const H = container.clientHeight || 400;
   const isTransparent = bgColor === 'transparent';
 
-  const renderer = new THREE.WebGLRenderer({ antialias:!isTilt, alpha:isTransparent });
+  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:isTransparent });
   renderer.setSize(W, H);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isTilt ? 1.5 : 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.3;
   if (isTransparent) renderer.setClearColor(0x000000, 0);
@@ -64,9 +64,7 @@ function initLogo3D(container) {
   const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 5000);
   camera.position.set(0, 0, 900);
 
-  if (!isTilt) {
-    scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-  }
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
 
   // Lights
   scene.add(new THREE.AmbientLight(0xfff8f0, 1.5));
