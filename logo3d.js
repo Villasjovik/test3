@@ -40,7 +40,8 @@ function initLogo3D(container) {
   const hasSparks = container.dataset.sparks !== 'false';
   const rotDelay = parseFloat(container.dataset.delay || '0');
   const nudgeX = parseFloat(container.dataset.nudgeX || '0');
-  const yOffset = parseFloat(container.dataset.yOffset || '0'); // shift logo + shadow vertically
+  const yOffset = parseFloat(container.dataset.yOffset || '0');
+  const shadowYAbs = container.dataset.shadowY; // absolute Y for shadow (overrides auto)
   const mode = container.dataset.mode || 'spin';
   const isTilt = mode === 'tilt';
   const motion = container.dataset.motion || 'default'; // 'default' | 'float-spin'
@@ -220,9 +221,13 @@ function initLogo3D(container) {
 
     pivot.add(logo);
 
-    // Position shadow plane below logo (respects yOffset)
+    // Position shadow plane
+    // If data-shadow-y is set, use absolute Y (aligns shadows across multiple logos)
+    // Otherwise auto: far below logo bottom so logo doesn't sit in its own shadow
     if (shadowPlane) {
-      shadowPlane.position.y = -fSize.y / 2 - 40 + yOffset;
+      shadowPlane.position.y = shadowYAbs != null
+        ? parseFloat(shadowYAbs)
+        : -fSize.y / 2 - 90 + yOffset;
       shadowPlane.scale.set(fSize.x / 220, 1, fSize.x / 220);
     }
   });
