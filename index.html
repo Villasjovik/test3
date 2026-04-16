@@ -49,24 +49,31 @@ body.ct #cur-r{width:2px;height:26px;border-radius:2px}
 .gd{height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,75,.55) 25%,rgba(212,168,75,.9) 50%,rgba(212,168,75,.55) 75%,transparent);transform-origin:center;transform:scaleX(0);opacity:0;transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .5s ease}
 .gd.vis{transform:scaleX(1);opacity:1}
 
-/* CURTAIN */
-#curt{position:fixed;inset:0;z-index:8000;pointer-events:none;display:grid;grid-template-columns:1fr 1fr}
-.cp{
-  background-color:var(--bg3);
-  background-image:
-    radial-gradient(ellipse 160% 120% at 50% 50%,transparent 10%,rgba(2,26,14,.82) 100%),
-    radial-gradient(circle,rgba(212,168,75,.055) 1px,transparent 1px);
-  background-size:100% 100%,28px 28px;
-  transition:transform 1.2s .32s cubic-bezier(.76,0,.24,1)
-}
-body.ready .cp:first-child{transform:translateX(-101%);transition-delay:1.15s}
-body.ready .cp:last-child{transform:translateX(101%);transition-delay:1.15s}
-#cc{position:fixed;inset:0;z-index:8001;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;pointer-events:none;transition:opacity .35s .75s ease}
-body.ready #cc{opacity:0}
-.cl{height:clamp(48px,7vw,88px);object-fit:contain;filter:brightness(0) invert(1) opacity(.9);opacity:0;animation:curtX .6s .05s var(--ease) forwards}
-.cx{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);font-size:clamp(32px,5vw,60px);line-height:1;opacity:0;animation:curtX .6s .25s var(--ease) forwards}
-.cl-b{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,38px);font-weight:500;color:var(--ink);letter-spacing:.12em;text-transform:uppercase;opacity:0;animation:curtX .6s .45s var(--ease) forwards}
-@keyframes curtX{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+/* CURTAIN — same bg as hero, fade out (not barn-door) */
+#curt{position:fixed;inset:0;z-index:8000;pointer-events:none;
+  background:radial-gradient(ellipse 90% 80% at 50% 50%,var(--bg3) 0%,var(--bg) 70%);
+  opacity:1;transition:opacity 1.2s 2.4s cubic-bezier(.4,0,.2,1)}
+body.phase2 #curt{opacity:0}
+
+/* Curtain content: flat logos in row, × centered */
+#cc{position:fixed;inset:0;z-index:8001;display:flex;flex-direction:row;
+  align-items:center;justify-content:center;gap:12px;pointer-events:none}
+.cl{height:clamp(48px,7vw,88px);object-fit:contain;filter:brightness(0) invert(1) opacity(.9);
+  opacity:0;transform:scale(.88);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.cx{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);
+  font-size:clamp(28px,4vw,52px);line-height:1;
+  opacity:0;transform:scale(.88);transition:opacity .6s .2s var(--ease),transform .6s .2s var(--ease)}
+.cl-b{font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,32px);font-weight:500;
+  color:var(--ink);letter-spacing:.12em;text-transform:uppercase;
+  opacity:0;transform:scale(.88);transition:opacity .6s .35s var(--ease),transform .6s .35s var(--ease)}
+/* Phase 1: flat logos appear */
+body.phase1 .cl,body.phase1 .cx,body.phase1 .cl-b{opacity:1;transform:scale(1)}
+/* Phase 2: flat logos fade, curtain fades */
+body.phase2 #cc{opacity:0;transition:opacity .8s 1.8s ease}
+
+/* 3D logos start hidden, appear in phase 2 */
+.logo-3d{opacity:0;transition:opacity 1s 0s ease}
+body.phase2 .logo-3d{opacity:1;transition-delay:2.2s}
 
 /* SIDENAV */
 #snav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:500;display:flex;flex-direction:column;gap:9px;align-items:flex-end}
@@ -90,7 +97,7 @@ background:radial-gradient(ellipse 90% 80% at 50% 50%,var(--bg3) 0%,var(--bg) 70
 background-image:radial-gradient(circle,rgba(212,168,75,.05) 1px,transparent 1px);background-size:28px 28px}
 .h-content{position:relative;z-index:2;padding:110px 24px 100px;display:flex;flex-direction:column;align-items:center}
 .h-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:52px}
-.h-lockup{display:flex;flex-direction:row;align-items:center;gap:12px;flex-wrap:nowrap;justify-content:center;margin-bottom:56px;position:relative}
+.h-lockup{display:flex;flex-direction:row;align-items:center;gap:8px;flex-wrap:nowrap;justify-content:center;margin-bottom:56px;position:relative}
 .h-lockup::after{content:'';position:absolute;width:500px;height:130px;left:50%;top:50%;transform:translate(-50%,-50%);
 border-radius:50%;background:radial-gradient(ellipse,rgba(212,168,75,.09),transparent 70%);
 pointer-events:none;animation:haloPulse 4s ease-in-out infinite}
@@ -108,11 +115,9 @@ max-width:720px;margin-bottom:56px}
 
 /* ── 3D LOGO CONTAINERS ── */
 .logo-3d{display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
-.hero-logo-vs{width:500px;height:320px}
-.hero-logo-brand{width:400px;height:150px}
 @media(max-width:700px){
-  .hero-logo-vs{width:320px;height:220px}
-  .hero-logo-brand{width:280px;height:110px}
+  .hero-logo-vs{max-width:280px!important;max-height:200px!important}
+  .hero-logo-brand{max-width:220px!important;max-height:90px!important}
 }
 
 /* ══ PARTNERS TICKER ════════════════════════════ */
@@ -300,10 +305,7 @@ position:relative;overflow:hidden;transition:color .35s}
   <div class="si" data-t="sec-cta"><span class="si-lbl">Kontakt</span><div class="si-dot"></div></div>
 </nav>
 
-<div id="curt" aria-hidden="true">
-  <div class="cp"></div>
-  <div class="cp"></div>
-</div>
+<div id="curt" aria-hidden="true"></div>
 <div id="cc" aria-hidden="true">
   <img class="cl" src="https://raw.githubusercontent.com/Villasjovik/thefriendlyhome/main/villasjovik_logga.webp" alt="Villa Sjövik"/>
   <span class="cx">&times;</span>
@@ -326,7 +328,8 @@ position:relative;overflow:hidden;transition:color .35s}
            data-rotate-speed="0.3"
            data-bevel-depth="18"
            data-sparks="true"
-           style="width:38vw;height:28vw;max-width:480px;max-height:340px">
+           data-delay="4.5"
+           style="width:36vw;height:24vw;max-width:440px;max-height:300px">
       </div>
       <span class="h-x">&times;</span>
       <div class="logo-3d hero-logo-brand"
@@ -335,7 +338,8 @@ position:relative;overflow:hidden;transition:color .35s}
            data-rotate-speed="0.3"
            data-bevel-depth="22"
            data-sparks="true"
-           style="width:30vw;height:12vw;max-width:380px;max-height:150px">
+           data-delay="4.5"
+           style="width:28vw;height:10vw;max-width:360px;max-height:130px">
       </div>
     </div>
     <h1 class="h-tagline">Era produkter. <em>I 164 000 engagerade</em> följares flöde.</h1>
@@ -536,11 +540,14 @@ position:relative;overflow:hidden;transition:color .35s}
 <script>
 'use strict';
 
-/* ── CURTAIN ── */
+/* ── CURTAIN SEQUENCE ── */
+// Phase 1 (t=0.3s): flat logos appear in curtain
+setTimeout(()=>document.body.classList.add('phase1'), 300);
+// Phase 2 (t=2.5s): flat logos fade, curtain fades, 3D appears behind
 setTimeout(()=>{
-  document.body.classList.add('ready');
-  setTimeout(()=>{dot.style.opacity='1';ring.style.opacity='1';},1400);
-},900);
+  document.body.classList.add('phase2');
+  dot.style.opacity='1'; ring.style.opacity='1';
+}, 2500);
 
 /* ── BODY LOADED ── */
 requestAnimationFrame(()=>document.body.classList.add('body-loaded'));

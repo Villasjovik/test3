@@ -38,6 +38,7 @@ function initLogo3D(container) {
   const fallback = container.dataset.fallback || null;
   const bgColor = container.dataset.bg || 'transparent';
   const hasSparks = container.dataset.sparks !== 'false';
+  const rotDelay = parseFloat(container.dataset.delay || '0');
 
   try { const c=document.createElement('canvas'); if(!c.getContext('webgl2')&&!c.getContext('webgl'))throw 0; }
   catch { if(fallback) container.innerHTML=`<img src="${fallback}" style="width:100%;height:100%;object-fit:contain;">`; return; }
@@ -132,7 +133,7 @@ function initLogo3D(container) {
     const dt = Math.min(clock.getDelta(), 0.05);
     elapsed += dt;
 
-    if (rotateSpeed > 0 && pivot.children.length > 0) {
+    if (rotateSpeed > 0 && pivot.children.length > 0 && elapsed > rotDelay) {
 
       // ── SPEED: smooth power ramp, readable front, fast whip back ──
       const angle = rotAngle % (Math.PI * 2);
