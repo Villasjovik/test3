@@ -261,12 +261,16 @@ function initLogo3D(container) {
       const t = elapsed;
 
       if (isTilt) {
-        // ── TILT MODE: ultra-subtle, just enough to show depth ──
+        // ── TILT MODE: subtle float + tilt on the spot (no scrolling) ──
         const phase = svgPath.length * 0.7;
-        pivot.rotation.y = Math.sin(t * 0.3 + phase) * 0.08 + Math.sin(t * 0.7 + phase) * 0.03;  // ±6°
-        pivot.rotation.x = Math.sin(t * 0.25 + phase * 1.3) * 0.04;   // ±2.3°
-        pivot.position.y = Math.sin(t * 0.2 + phase) * 1.2;
-        pivot.position.x = Math.sin(t * 0.15 + phase * 0.8) * 0.8;
+        // Y-rotation tilt: ±8° so depth shows
+        pivot.rotation.y = Math.sin(t * 0.35 + phase) * 0.14;
+        // X-tilt: ±3° for nodding feel
+        pivot.rotation.x = Math.sin(t * 0.28 + phase * 1.3) * 0.055;
+        pivot.rotation.z = Math.cos(t * 0.22 + phase * 0.7) * 0.02;
+        // Float: noticeable up/down, gentle horizontal sway
+        pivot.position.y = Math.sin(t * 0.5 + phase) * 6 + Math.sin(t * 1.1 + phase) * 1.5;
+        pivot.position.x = Math.sin(t * 0.38 + phase * 0.8) * 3;
 
       } else if (rotateSpeed > 0) {
         const timeSinceStart = elapsed - rotDelay;
