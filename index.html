@@ -179,7 +179,7 @@ background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:
 @media(max-width:700px){.stats-grid{grid-template-columns:1fr}.sc{border-right:none;border-bottom:1px solid rgba(212,168,75,.1)}.sc:last-child{border-bottom:none}}
 
 /* ══ LEVERANSEN ════════════════════════════════ */
-#sec-lev{position:relative;background:linear-gradient(180deg,var(--brn2) 0%,var(--brn) 100%);padding:96px 24px;overflow:hidden}
+#sec-lev{position:relative;background:linear-gradient(168deg,#2a231c 0%,var(--brn2) 30%,var(--brn) 70%,#110e0b 100%);padding:96px 24px;overflow:hidden}
 /* leather opacity tuned per section */
 .lev-orb{position:absolute;border-radius:50%;filter:blur(130px);pointer-events:none}
 .lev-orb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(1,142,71,.14),transparent);top:-160px;right:-120px;animation:orbf 26s ease-in-out infinite}
@@ -213,13 +213,22 @@ z-index:2;pointer-events:none;text-align:center;padding:0 24px}
 
 /* ── LEATHER TEXTURE OVERLAY (brown sections) ── */
 .leather-tex{
-  position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.4;
-  background-image:url("data:image/svg+xml,%3Csvg width='80' height='56' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='2' width='35' height='22' rx='8' ry='8' fill='none' stroke='rgba(255,255,255,.12)' stroke-width='1'/%3E%3Crect x='43' y='2' width='35' height='22' rx='8' ry='8' fill='none' stroke='rgba(255,255,255,.1)' stroke-width='1'/%3E%3Crect x='22' y='30' width='35' height='22' rx='8' ry='8' fill='none' stroke='rgba(255,255,255,.11)' stroke-width='1'/%3E%3Crect x='-18' y='30' width='35' height='22' rx='8' ry='8' fill='none' stroke='rgba(255,255,255,.1)' stroke-width='1'/%3E%3Crect x='62' y='30' width='35' height='22' rx='8' ry='8' fill='none' stroke='rgba(255,255,255,.12)' stroke-width='1'/%3E%3C/svg%3E");
-  background-size:80px 56px
+  position:absolute;inset:0;pointer-events:none;z-index:0;
+  /* Layered depth: top light → center warm → bottom deep shadow */
+  background:
+    /* Top highlight — light hitting the surface from above */
+    linear-gradient(180deg, rgba(212,168,75,.06) 0%, transparent 25%, transparent 75%, rgba(0,0,0,.12) 100%),
+    /* Subtle vertical vignette for depth */
+    radial-gradient(ellipse 120% 80% at 50% 40%, rgba(255,255,255,.03) 0%, transparent 50%, rgba(0,0,0,.08) 100%),
+    /* Fine grain texture — tiny noise-like dots for leather feel */
+    url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='.4' fill='rgba(255,255,255,.04)'/%3E%3Ccircle cx='4' cy='4' r='.3' fill='rgba(0,0,0,.06)'/%3E%3C/svg%3E"),
+    /* Wider grain — larger pores at different scale */
+    url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='7' r='.6' fill='rgba(0,0,0,.04)'/%3E%3Ccircle cx='14' cy='3' r='.5' fill='rgba(255,255,255,.025)'/%3E%3Ccircle cx='8' cy='16' r='.7' fill='rgba(0,0,0,.035)'/%3E%3Ccircle cx='17' cy='13' r='.4' fill='rgba(255,255,255,.02)'/%3E%3C/svg%3E");
+  background-size:100% 100%, 100% 100%, 6px 6px, 20px 20px
 }
 
 /* ══ PRICING ════════════════════════════════════ */
-#sec-pr{position:relative;background:linear-gradient(145deg,var(--brn) 0%,var(--brn2) 50%,var(--brn) 100%);padding:96px 24px;overflow:hidden}
+#sec-pr{position:relative;background:linear-gradient(168deg,#2a231c 0%,var(--brn2) 30%,var(--brn) 70%,#110e0b 100%);padding:96px 24px;overflow:hidden}
 .pr-inner{position:relative;z-index:1;max-width:900px;margin:0 auto}
 .pr-orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
 .pr-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(212,168,75,.12),transparent);top:-150px;right:-100px;animation:orbf 26s ease-in-out infinite}
