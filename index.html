@@ -77,9 +77,10 @@ body.shrink .h-scroll{opacity:1;transform:none;transition-delay:2.4s}
   filter:drop-shadow(0 2px 8px rgba(212,168,75,.35)) drop-shadow(0 0 20px rgba(212,168,75,.15));
   transform:scaleY(1.3) scaleX(.85);
   margin:0 20px;flex-shrink:0;align-self:center;
-  opacity:0;transition:opacity .6s .5s var(--ease),filter .6s var(--ease)
+  opacity:0;transform:scaleY(1.3) scaleX(.85) scale(0);
+  transition:opacity .3s .5s var(--ease),transform .8s .5s cubic-bezier(.34,1.56,.64,1)
 }
-body.slide-in .h-x{opacity:1}
+body.slide-in .h-x{opacity:1;transform:scaleY(1.3) scaleX(.85) scale(1)}
 
 /* SIDENAV */
 #snav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:500;display:flex;flex-direction:column;gap:9px;align-items:flex-end}
