@@ -40,8 +40,10 @@ function initLogo3D(container) {
   const hasSparks = container.dataset.sparks !== 'false';
   const rotDelay = parseFloat(container.dataset.delay || '0');
   const nudgeX = parseFloat(container.dataset.nudgeX || '0');
-  const mode = container.dataset.mode || 'spin'; // 'spin' or 'tilt'
+  const mode = container.dataset.mode || 'spin';
   const isTilt = mode === 'tilt';
+  const material = container.dataset.material || 'default'; // gold, chrome, plastic, metal, glass
+  const hasShadow = container.dataset.shadow !== 'false';
 
   try { const c=document.createElement('canvas'); if(!c.getContext('webgl2')&&!c.getContext('webgl'))throw 0; }
   catch { if(fallback) container.innerHTML=`<img src="${fallback}" style="width:100%;height:100%;object-fit:contain;">`; return; }
@@ -66,13 +68,55 @@ function initLogo3D(container) {
 
   scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
 
-  // Lights
-  scene.add(new THREE.AmbientLight(0xfff8f0, 1.5));
-  [[300,400,600,0xffffff,5],[-400,-100,300,0xffeedd,2],[0,100,-700,0xffffff,2.5],[0,700,100,0xffffff,2]]
-    .forEach(([x,y,z,c,i])=>{const l=new THREE.DirectionalLight(c,i);l.position.set(x,y,z);scene.add(l);});
+  // Lights — matches 3dsvg.design presets
+  scene.add(new THREE.AmbientLight(0xfff8f0, 1.0));
+  const keyLight = new THREE.DirectionalLight(0xffffff, 4.5);
+  keyLight.position.set(500, 500, 900); // Key at +X +Y +Z
+  keyLight.castShadow = hasShadow;
+  if (hasShadow) {
+    keyLight.shadow.mapSize.width = 1024;
+    keyLight.shadow.mapSize.height = 1024;
+    keyLight.shadow.camera.near = 100;
+    keyLight.shadow.camera.far = 2500;
+    keyLight.shadow.camera.left = -400;
+    keyLight.shadow.camera.right = 400;
+    keyLight.shadow.camera.top = 400;
+    keyLight.shadow.camera.bottom = -400;
+    keyLight.shadow.bias = -0.001;
+    keyLight.shadow.radius = 8;
+  }
+  scene.add(keyLight);
+  const fillLight = new THREE.DirectionalLight(0xffeedd, 1.8);
+  fillLight.position.set(-400, 100, 400);
+  scene.add(fillLight);
+  const rimLight = new THREE.DirectionalLight(0xffffff, 2.2);
+  rimLight.position.set(0, 200, -600);
+  scene.add(rimLight);
 
-  const frontMat = new THREE.MeshStandardMaterial({ color:hexInt(colorHex), metalness:.2, roughness:.28 });
-  const bevelMat = new THREE.MeshStandardMaterial({ color:darken(colorHex,.08), metalness:.38, roughness:.1 });
+  if (hasShadow) {
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  }
+
+  // MATERIAL PRESETS (matches 3dsvg.design)
+  const presets = {
+    default: { color: hexInt(colorHex), metalness: 0.2, roughness: 0.28 },
+    plastic: { color: hexInt(colorHex), metalness: 0.0, roughness: 0.45 },
+    metal:   { color: hexInt(colorHex), metalness: 0.85, roughness: 0.3 },
+    glass:   { color: hexInt(colorHex), metalness: 0.0, roughness: 0.05, transparent: true, opacity: 0.4, transmission: 0.9 },
+    rubber:  { color: hexInt(colorHex), metalness: 0.0, roughness: 0.85 },
+    chrome:  { color: 0xe8e8e8, metalness: 1.0, roughness: 0.05 },
+    gold:    { color: 0xd4a84b, metalness: 1.0, roughness: 0.25 },
+    clay:    { color: hexInt(colorHex), metalness: 0.0, roughness: 0.95 },
+    emissive:{ color: hexInt(colorHex), emissive: hexInt(colorHex), emissiveIntensity: 0.6, metalness: 0.1, roughness: 0.4 },
+  };
+  const preset = presets[material] || presets.default;
+  const frontMat = new THREE.MeshStandardMaterial(preset);
+  const bevelMat = new THREE.MeshStandardMaterial({
+    ...preset,
+    color: material === 'gold' ? 0xf0c878 : material === 'chrome' ? 0xffffff : darken('#'+(preset.color).toString(16).padStart(6,'0'), 0.08),
+    roughness: Math.max(0.02, (preset.roughness || 0.28) - 0.1)
+  });
 
   const updSparks = hasSparks ? mkSparks(scene) : null;
   let logoBox = null;
@@ -82,6 +126,29 @@ function initLogo3D(container) {
   // PIVOT = rotation point. Logo meshes centered inside.
   const pivot = new THREE.Group();
   scene.add(pivot);
+
+  // GROUND SHADOW — soft radial gradient below logo
+  let shadowPlane = null;
+  if (hasShadow) {
+    const shadowGeo = new THREE.CircleGeometry(200, 32);
+    const shadowMat = new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      uniforms: { uOpacity: { value: 0.4 } },
+      vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }`,
+      fragmentShader: `
+        varying vec2 vUv;
+        uniform float uOpacity;
+        void main(){
+          float d = length(vUv - 0.5) * 2.0;
+          float a = smoothstep(1.0, 0.0, d) * smoothstep(1.0, 0.6, d);
+          gl_FragColor = vec4(0.0, 0.0, 0.0, a * uOpacity);
+        }`
+    });
+    shadowPlane = new THREE.Mesh(shadowGeo, shadowMat);
+    shadowPlane.rotation.x = -Math.PI / 2;
+    scene.add(shadowPlane);
+  }
 
   const useColorFromSvg = container.dataset.useSvgColor === 'true';
 
@@ -144,7 +211,18 @@ function initLogo3D(container) {
     const fSize = finalBox.getSize(new THREE.Vector3());
     logoBox = { w: fSize.x, h: fSize.y };
 
+    // Cast shadow for all meshes in logo
+    if (hasShadow) {
+      logo.traverse(m => { if (m.isMesh) m.castShadow = true; });
+    }
+
     pivot.add(logo);
+
+    // Position shadow plane below logo
+    if (shadowPlane) {
+      shadowPlane.position.y = -fSize.y / 2 - 40;
+      shadowPlane.scale.set(fSize.x / 220, 1, fSize.x / 220);
+    }
   });
 
   const clock = new THREE.Clock();
