@@ -214,17 +214,20 @@ z-index:2;pointer-events:none;text-align:center;padding:0 24px}
 /* ── LEATHER TEXTURE OVERLAY (brown sections) ── */
 .leather-tex{
   position:absolute;inset:0;pointer-events:none;z-index:0;
-  /* Layered depth: top light → center warm → bottom deep shadow */
   background:
-    /* Top highlight — light hitting the surface from above */
-    linear-gradient(180deg, rgba(212,168,75,.06) 0%, transparent 25%, transparent 75%, rgba(0,0,0,.12) 100%),
-    /* Subtle vertical vignette for depth */
-    radial-gradient(ellipse 120% 80% at 50% 40%, rgba(255,255,255,.03) 0%, transparent 50%, rgba(0,0,0,.08) 100%),
-    /* Fine grain texture — tiny noise-like dots for leather feel */
-    url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='.4' fill='rgba(255,255,255,.04)'/%3E%3Ccircle cx='4' cy='4' r='.3' fill='rgba(0,0,0,.06)'/%3E%3C/svg%3E"),
-    /* Wider grain — larger pores at different scale */
-    url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='7' r='.6' fill='rgba(0,0,0,.04)'/%3E%3Ccircle cx='14' cy='3' r='.5' fill='rgba(255,255,255,.025)'/%3E%3Ccircle cx='8' cy='16' r='.7' fill='rgba(0,0,0,.035)'/%3E%3Ccircle cx='17' cy='13' r='.4' fill='rgba(255,255,255,.02)'/%3E%3C/svg%3E");
-  background-size:100% 100%, 100% 100%, 6px 6px, 20px 20px
+    /* Top-light: warm gold highlight from above */
+    linear-gradient(176deg, rgba(196,149,106,.09) 0%, rgba(212,168,75,.04) 15%, transparent 35%, transparent 65%, rgba(0,0,0,.15) 100%),
+    /* Horizontal center glow — subtle convex surface illusion */
+    radial-gradient(ellipse 80% 100% at 50% 45%, rgba(255,255,255,.025) 0%, transparent 55%),
+    /* Side shadows — edges recede */
+    linear-gradient(90deg, rgba(0,0,0,.08) 0%, transparent 15%, transparent 85%, rgba(0,0,0,.08) 100%),
+    /* Fine grain — micro texture */
+    url("data:image/svg+xml,%3Csvg width='5' height='5' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1.2' cy='1.2' r='.35' fill='rgba(255,255,255,.035)'/%3E%3Ccircle cx='3.8' cy='3.6' r='.3' fill='rgba(0,0,0,.05)'/%3E%3C/svg%3E"),
+    /* Medium grain — pores */
+    url("data:image/svg+xml,%3Csvg width='14' height='14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='5' r='.5' fill='rgba(0,0,0,.04)'/%3E%3Ccircle cx='10' cy='2' r='.4' fill='rgba(255,255,255,.02)'/%3E%3Ccircle cx='7' cy='11' r='.55' fill='rgba(0,0,0,.03)'/%3E%3C/svg%3E"),
+    /* Large grain — soft undulation */
+    url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='15' r='8' fill='rgba(255,255,255,.008)'/%3E%3Ccircle cx='32' cy='28' r='7' fill='rgba(0,0,0,.012)'/%3E%3C/svg%3E");
+  background-size:100% 100%, 100% 100%, 100% 100%, 5px 5px, 14px 14px, 40px 40px
 }
 
 /* ══ PRICING ════════════════════════════════════ */

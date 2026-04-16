@@ -146,13 +146,12 @@ function initLogo3D(container) {
       const t = elapsed;
 
       if (isTilt) {
-        // ── TILT MODE: gentle oscillation, never full rotation ──
-        // Each instance gets unique phase from a hash of svgPath
+        // ── TILT MODE: ultra-subtle, just enough to show depth ──
         const phase = svgPath.length * 0.7;
-        pivot.rotation.y = Math.sin(t * 0.4 + phase) * 0.22 + Math.sin(t * 0.9 + phase) * 0.08;  // ±17°
-        pivot.rotation.x = Math.sin(t * 0.3 + phase * 1.3) * 0.06;   // ±3.5°
-        pivot.position.y = Math.sin(t * 0.35 + phase) * 2;
-        pivot.position.x = Math.sin(t * 0.25 + phase * 0.8) * 1.5;
+        pivot.rotation.y = Math.sin(t * 0.3 + phase) * 0.08 + Math.sin(t * 0.7 + phase) * 0.03;  // ±6°
+        pivot.rotation.x = Math.sin(t * 0.25 + phase * 1.3) * 0.04;   // ±2.3°
+        pivot.position.y = Math.sin(t * 0.2 + phase) * 1.2;
+        pivot.position.x = Math.sin(t * 0.15 + phase * 0.8) * 0.8;
 
       } else if (rotateSpeed > 0) {
         // ── SPIN MODE ──
