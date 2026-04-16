@@ -273,13 +273,13 @@ function initLogo3D(container) {
           const easeIn = easeInT * easeInT * (3 - 2 * easeInT);
 
           if (motion === 'float-spin') {
-            // ── FLOAT + SPIN: clearly visible speed change ──
+            // ── FLOAT + SPIN: speed ramp starts earlier, ends later ──
             const angle = rotAngle % (Math.PI * 2);
             const facing = Math.cos(angle); // 1=front, -1=back
-            // Readable zone: facing > 0.5 (~±60°, 1/3 of circle)
-            const t = Math.max(0, Math.min(1, (0.5 - facing) / 0.9));
+            // Narrow readable zone (±41°): accel starts earlier
+            // Full speed reached late (~120°): stays fast longer
+            const t = Math.max(0, Math.min(1, (0.75 - facing) / 1.25));
             const fast = t * t * t * (t * (t * 6 - 15) + 10); // quintic
-            // Slow ~21°/sec at front (visible movement), fast ~280°/sec at back
             const speedMul = 1.0 + fast * 12.0;
             rotAngle += rotateSpeed * 0.012 * speedMul * easeIn;
           } else {
