@@ -39,7 +39,9 @@ function initLogo3D(container) {
   const bgColor = container.dataset.bg || 'transparent';
   const hasSparks = container.dataset.sparks !== 'false';
   const rotDelay = parseFloat(container.dataset.delay || '0');
-  const nudgeX = parseFloat(container.dataset.nudgeX || '0'); // push logo away from ×
+  const nudgeX = parseFloat(container.dataset.nudgeX || '0');
+  const mode = container.dataset.mode || 'spin'; // 'spin' or 'tilt'
+  const isTilt = mode === 'tilt';
 
   try { const c=document.createElement('canvas'); if(!c.getContext('webgl2')&&!c.getContext('webgl'))throw 0; }
   catch { if(fallback) container.innerHTML=`<img src="${fallback}" style="width:100%;height:100%;object-fit:contain;">`; return; }
@@ -48,9 +50,9 @@ function initLogo3D(container) {
   const H = container.clientHeight || 400;
   const isTransparent = bgColor === 'transparent';
 
-  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:isTransparent });
+  const renderer = new THREE.WebGLRenderer({ antialias:!isTilt, alpha:isTransparent });
   renderer.setSize(W, H);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isTilt ? 1.5 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.3;
   if (isTransparent) renderer.setClearColor(0x000000, 0);
@@ -62,7 +64,9 @@ function initLogo3D(container) {
   const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 5000);
   camera.position.set(0, 0, 900);
 
-  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+  if (!isTilt) {
+    scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+  }
 
   // Lights
   scene.add(new THREE.AmbientLight(0xfff8f0, 1.5));
@@ -138,41 +142,42 @@ function initLogo3D(container) {
     const dt = Math.min(clock.getDelta(), 0.05);
     elapsed += dt;
 
-    if (rotateSpeed > 0 && pivot.children.length > 0) {
+    if (pivot.children.length > 0) {
+      const t = elapsed;
 
-      // ── ROTATION START: ease in from static ──
-      // Logo starts facing forward (angle=0), rotation eases in after delay
-      const timeSinceStart = elapsed - rotDelay;
-      const canRotate = timeSinceStart > 0;
+      if (isTilt) {
+        // ── TILT MODE: gentle oscillation, never full rotation ──
+        // Each instance gets unique phase from a hash of svgPath
+        const phase = svgPath.length * 0.7;
+        pivot.rotation.y = Math.sin(t * 0.4 + phase) * 0.22 + Math.sin(t * 0.9 + phase) * 0.08;  // ±17°
+        pivot.rotation.x = Math.sin(t * 0.3 + phase * 1.3) * 0.06;   // ±3.5°
+        pivot.position.y = Math.sin(t * 0.35 + phase) * 2;
+        pivot.position.x = Math.sin(t * 0.25 + phase * 0.8) * 1.5;
 
-      if (canRotate) {
-        // Fast ease-in over 1.5 seconds
-        const easeInT = Math.min(1, timeSinceStart / 1.5);
-        const easeIn = easeInT * easeInT * (3 - 2 * easeInT); // smoothstep
-
-        // ── SPEED CURVE: quadratic ramp, starts earlier, stays fast longer ──
-        const angle = rotAngle % (Math.PI * 2);
-        const facing = Math.cos(angle);
-        const offCenter = (1.0 - facing) * 0.5;
-        // ±30°=1.2x, ±45°=2x, ±60°=4x, ±90°=12x, back=46x
-        const speedMul = 1.0 + offCenter * offCenter * 45.0;
-
-        rotAngle += rotateSpeed * 0.006 * speedMul * easeIn;
-        pivot.rotation.y = rotAngle;
+      } else if (rotateSpeed > 0) {
+        // ── SPIN MODE ──
+        const timeSinceStart = elapsed - rotDelay;
+        if (timeSinceStart > 0) {
+          const easeInT = Math.min(1, timeSinceStart / 1.5);
+          const easeIn = easeInT * easeInT * (3 - 2 * easeInT);
+          const angle = rotAngle % (Math.PI * 2);
+          const facing = Math.cos(angle);
+          const offCenter = (1.0 - facing) * 0.5;
+          const speedMul = 1.0 + offCenter * offCenter * 45.0;
+          rotAngle += rotateSpeed * 0.006 * speedMul * easeIn;
+          pivot.rotation.y = rotAngle;
+        }
       }
 
-      // ── FLOATING PHYSICS (always active, even before rotation) ──
-      const t = elapsed;
-      // Base float
-      const floatX = Math.sin(t * 0.41) * 4 + Math.sin(t * 1.17) * 1.5;
-      const floatY = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
-      // Dynamic X compensation: push logo away from center by nudgeX
-      // plus compensate for depth expansion during rotation
-      const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
-      pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
-      pivot.position.y = floatY;
-      pivot.rotation.x = Math.sin(t * 0.29) * 0.02 + Math.sin(t * 0.67) * 0.01;
-      pivot.rotation.z = Math.cos(t * 0.37) * 0.015;
+      if (!isTilt) {
+        const floatX = Math.sin(t * 0.41) * 4 + Math.sin(t * 1.17) * 1.5;
+        const floatY = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
+        const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
+        pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
+        pivot.position.y = floatY;
+        pivot.rotation.x = Math.sin(t * 0.29) * 0.02 + Math.sin(t * 0.67) * 0.01;
+        pivot.rotation.z = Math.cos(t * 0.37) * 0.015;
+      }
     }
 
     if (updSparks) updSparks(dt, logoBox);
