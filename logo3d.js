@@ -315,18 +315,21 @@ function initLogo3D(container) {
       }
     }
 
-    // Dynamic shadow: aggressive shrink with cos² curve
+    // Dynamic shadow: combines rotation shrink + float-based pulse
     if (shadowPlane && logoBox) {
       const c = Math.cos(rotAngle);
-      const s = Math.sin(rotAngle);
-      // cos² makes width drop faster: at 30°→75%, 45°→50%, 60°→25%
-      const visW = logoBox.w * c * c + depth * Math.abs(s) * 0.5;
-      const fullScale = logoBox.w / 380;
-      const targetScale = visW / 380;
+      const rotScale = c * c; // 1 at front, 0 at sides, 1 at back
+
+      // Float-based pulse: high logo = small/light shadow, low logo = wide/dark
+      const floatY = pivot.position.y; // current Y from float animation
+      const floatNorm = (floatY + 50) / 100; // -50→0, 0→0.5, +50→1
+      const heightFactor = 1.3 - Math.max(0, Math.min(1, floatNorm)) * 0.6; // low=1.3, high=0.7
+
+      const baseScale = logoBox.w / 380;
       shadowPlane.position.x = pivot.position.x;
-      shadowPlane.scale.x = Math.max(0.05, targetScale);
-      const widthRatio = Math.min(1, targetScale / fullScale);
-      shadowPlane.material.uniforms.uOpacity.value = 0.15 + widthRatio * 0.55;
+      shadowPlane.scale.x = Math.max(0.05, baseScale * rotScale * heightFactor);
+      shadowPlane.scale.y = heightFactor; // also stretches/squashes vertically
+      shadowPlane.material.uniforms.uOpacity.value = 0.15 + rotScale * heightFactor * 0.5;
     }
 
     if (updSparks) updSparks(dt, logoBox);
