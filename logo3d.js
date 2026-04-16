@@ -40,6 +40,7 @@ function initLogo3D(container) {
   const hasSparks = container.dataset.sparks !== 'false';
   const rotDelay = parseFloat(container.dataset.delay || '0');
   const nudgeX = parseFloat(container.dataset.nudgeX || '0');
+  const yOffset = parseFloat(container.dataset.yOffset || '0'); // shift logo + shadow vertically
   const mode = container.dataset.mode || 'spin';
   const isTilt = mode === 'tilt';
   const motion = container.dataset.motion || 'default'; // 'default' | 'float-spin'
@@ -219,9 +220,9 @@ function initLogo3D(container) {
 
     pivot.add(logo);
 
-    // Position shadow plane below logo
+    // Position shadow plane below logo (respects yOffset)
     if (shadowPlane) {
-      shadowPlane.position.y = -fSize.y / 2 - 40;
+      shadowPlane.position.y = -fSize.y / 2 - 40 + yOffset;
       shadowPlane.scale.set(fSize.x / 220, 1, fSize.x / 220);
     }
   });
@@ -267,12 +268,11 @@ function initLogo3D(container) {
 
       if (!isTilt) {
         if (motion === 'float-spin') {
-          // Pronounced levitation — big vertical travel, visible drift
           const floatY = Math.sin(t * 0.55) * 38 + Math.sin(t * 1.4) * 6;
           const floatX = Math.sin(t * 0.35) * 10 + Math.sin(t * 0.8) * 3;
           const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
           pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
-          pivot.position.y = floatY;
+          pivot.position.y = floatY + yOffset;
           pivot.rotation.x = Math.sin(t * 0.4) * 0.05;
           pivot.rotation.z = Math.sin(t * 0.3) * 0.025;
         } else {
@@ -280,7 +280,7 @@ function initLogo3D(container) {
           const floatY = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
           const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
           pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
-          pivot.position.y = floatY;
+          pivot.position.y = floatY + yOffset;
           pivot.rotation.x = Math.sin(t * 0.29) * 0.02 + Math.sin(t * 0.67) * 0.01;
           pivot.rotation.z = Math.cos(t * 0.37) * 0.015;
         }
