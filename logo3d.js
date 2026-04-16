@@ -71,10 +71,10 @@ function initLogo3D(container) {
 
   scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
 
-  // Lights — matches 3dsvg.design presets
-  scene.add(new THREE.AmbientLight(0xfff8f0, 1.0));
-  const keyLight = new THREE.DirectionalLight(0xffffff, 4.5);
-  keyLight.position.set(500, 500, 900); // Key at +X +Y +Z
+  // Lights — strong key from upper right corner
+  scene.add(new THREE.AmbientLight(0xfff8f0, 0.7));
+  const keyLight = new THREE.DirectionalLight(0xfff2e0, 6.0);
+  keyLight.position.set(900, 800, 500); // strong upper-right-front
   keyLight.castShadow = hasShadow;
   if (hasShadow) {
     keyLight.shadow.mapSize.width = 1024;
@@ -89,11 +89,13 @@ function initLogo3D(container) {
     keyLight.shadow.radius = 8;
   }
   scene.add(keyLight);
-  const fillLight = new THREE.DirectionalLight(0xffeedd, 1.8);
-  fillLight.position.set(-400, 100, 400);
+  // Soft fill from lower left — gives shape without flattening shadows
+  const fillLight = new THREE.DirectionalLight(0xffeedd, 1.2);
+  fillLight.position.set(-500, -200, 400);
   scene.add(fillLight);
-  const rimLight = new THREE.DirectionalLight(0xffffff, 2.2);
-  rimLight.position.set(0, 200, -600);
+  // Rim from upper-left-back for edge definition
+  const rimLight = new THREE.DirectionalLight(0xffffff, 1.8);
+  rimLight.position.set(-400, 400, -600);
   scene.add(rimLight);
 
   if (hasShadow) {
