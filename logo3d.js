@@ -301,8 +301,9 @@ function initLogo3D(container) {
           const depthExpansion = Math.abs(Math.sin(rotAngle)) * depth * 0.3;
           pivot.position.x = floatX + nudgeX + (nudgeX > 0 ? depthExpansion : -depthExpansion);
           pivot.position.y = floatY + yOffset;
-          pivot.rotation.x = Math.sin(t * 0.4) * 0.05;
-          pivot.rotation.z = Math.sin(t * 0.3) * 0.025;
+          // Larger X-tilt + different frequencies = light sweeps every cycle
+          pivot.rotation.x = Math.sin(t * 0.47) * 0.14 + Math.sin(t * 1.1) * 0.04;
+          pivot.rotation.z = Math.sin(t * 0.31) * 0.06 + Math.cos(t * 0.73) * 0.02;
         } else {
           const floatX = Math.sin(t * 0.41) * 4 + Math.sin(t * 1.17) * 1.5;
           const floatY = Math.sin(t * 0.33) * 5 + Math.cos(t * 0.79) * 2.5;
