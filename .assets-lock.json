@@ -1,0 +1,86 @@
+{
+  "synced_at": "2026-04-26T12:12:44.244Z",
+  "manifest_version": 1,
+  "files": {
+    "lexington.svg": {
+      "md5": "6af45bdb652477cc4e1e013ff4f7644b",
+      "source": "wiki/assets/lexington/lexington.svg",
+      "brand": "lexington"
+    },
+    "velux.svg": {
+      "md5": "23263b99678554e1eecbf90db79cf79f",
+      "source": "wiki/assets/velux/velux.svg",
+      "brand": "velux"
+    },
+    "beslagonline.svg": {
+      "md5": "0944142d41381b8216155284aa9dd8f3",
+      "source": "wiki/assets/beslagonline/beslagonline.svg",
+      "brand": "beslagonline"
+    },
+    "brunngard.svg": {
+      "md5": "3d8a79dbedf6372a70f4119cb2864282",
+      "source": "wiki/assets/brunngard/brunngard.svg",
+      "brand": "brunngard"
+    },
+    "husqvarna.svg": {
+      "md5": "048eee5e25f4893f18e294d06bf1648a",
+      "source": "wiki/assets/husqvarna/husqvarna.svg",
+      "brand": "husqvarna"
+    },
+    "jape.svg": {
+      "md5": "636666ed433f275d93430c96b1e102d7",
+      "source": "wiki/assets/jape/jape.svg",
+      "brand": "jape"
+    },
+    "klinta.svg": {
+      "md5": "dfe9f70d1061fcdf9b2086770c9a6724",
+      "source": "wiki/assets/klinta/klinta.svg",
+      "brand": "klinta"
+    },
+    "markslojd.svg": {
+      "md5": "1c8a1f4b96f8e005f9596fad3100528c",
+      "source": "wiki/assets/markslojd/markslojd.svg",
+      "brand": "markslojd"
+    },
+    "mille-notti.svg": {
+      "md5": "cb62e2c2778429fa44756f096eee5e31",
+      "source": "wiki/assets/mille-notti/mille-notti.svg",
+      "brand": "mille-notti"
+    },
+    "nuura.svg": {
+      "md5": "a849643e8bc657b84063002294594409",
+      "source": "wiki/assets/nuura/nuura.svg",
+      "brand": "nuura"
+    },
+    "segway.svg": {
+      "md5": "b05c2659b85925fb503d08b3937540a8",
+      "source": "wiki/assets/segway/segway.svg",
+      "brand": "segway"
+    },
+    "tergent.svg": {
+      "md5": "cc18c2ab47d0cf17578897a3175d864d",
+      "source": "wiki/assets/tergent/tergent.svg",
+      "brand": "tergent"
+    },
+    "thefriendlyhome.svg": {
+      "md5": "e4ea4098ff76e384cfdae32ccb304efb",
+      "source": "wiki/assets/thefriendlyhome/thefriendlyhome.svg",
+      "brand": "thefriendlyhome"
+    },
+    "tinekhome.svg": {
+      "md5": "1808e9a288be44724bf5ba598fd974cb",
+      "source": "wiki/assets/tinekhome/tinekhome.svg",
+      "brand": "tinekhome"
+    },
+    "vedum.svg": {
+      "md5": "62ec886cf0b062d0e372175e012d8c60",
+      "source": "wiki/assets/vedum/vedum.svg",
+      "brand": "vedum"
+    },
+    "villasjovik.svg": {
+      "md5": "3cab88fd002242bf8488e4d1b99d2ae9",
+      "source": "wiki/assets/villasjovik/villasjovik.svg",
+      "brand": "villasjovik"
+    }
+  }
+}
