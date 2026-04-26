@@ -1,5 +1,5 @@
 {
-  "synced_at": "2026-04-26T12:12:44.244Z",
+  "synced_at": "2026-04-26T14:07:09.243Z",
   "manifest_version": 1,
   "files": {
     "lexington.svg": {
@@ -7,9 +7,19 @@
       "source": "wiki/assets/lexington/lexington.svg",
       "brand": "lexington"
     },
+    "lexington.png": {
+      "md5": "aab5b46eaea068b129bcb18a68dd3900",
+      "source": "wiki/assets/lexington/lexington.png",
+      "brand": "lexington"
+    },
     "velux.svg": {
       "md5": "23263b99678554e1eecbf90db79cf79f",
       "source": "wiki/assets/velux/velux.svg",
+      "brand": "velux"
+    },
+    "velux.png": {
+      "md5": "fd729fbb453142c2b735047a6f58e4a5",
+      "source": "wiki/assets/velux/velux.png",
       "brand": "velux"
     },
     "beslagonline.svg": {
@@ -17,9 +27,19 @@
       "source": "wiki/assets/beslagonline/beslagonline.svg",
       "brand": "beslagonline"
     },
+    "beslagonline.png": {
+      "md5": "487e75c566eacd2b668c292e8fb5ff9a",
+      "source": "wiki/assets/beslagonline/beslagonline.png",
+      "brand": "beslagonline"
+    },
     "brunngard.svg": {
       "md5": "3d8a79dbedf6372a70f4119cb2864282",
       "source": "wiki/assets/brunngard/brunngard.svg",
+      "brand": "brunngard"
+    },
+    "brunngard.png": {
+      "md5": "8a9b517e9bbd291a587fc6be0c861c1d",
+      "source": "wiki/assets/brunngard/brunngard.png",
       "brand": "brunngard"
     },
     "husqvarna.svg": {
@@ -27,9 +47,24 @@
       "source": "wiki/assets/husqvarna/husqvarna.svg",
       "brand": "husqvarna"
     },
+    "husqvarna.jpeg": {
+      "md5": "496c1c47e9a623b7c97a9278b4912f75",
+      "source": "wiki/assets/husqvarna/husqvarna.jpeg",
+      "brand": "husqvarna"
+    },
+    "husqvarna.jpg": {
+      "md5": "496c1c47e9a623b7c97a9278b4912f75",
+      "source": "wiki/assets/husqvarna/husqvarna.jpg",
+      "brand": "husqvarna"
+    },
     "jape.svg": {
       "md5": "636666ed433f275d93430c96b1e102d7",
       "source": "wiki/assets/jape/jape.svg",
+      "brand": "jape"
+    },
+    "jape.webp": {
+      "md5": "dc4369d29285b4896d8cb9a56f9376c5",
+      "source": "wiki/assets/jape/jape.webp",
       "brand": "jape"
     },
     "klinta.svg": {
@@ -37,19 +72,39 @@
       "source": "wiki/assets/klinta/klinta.svg",
       "brand": "klinta"
     },
+    "klinta.avif": {
+      "md5": "ca90f10f713b0ceaf15b446876a7e45c",
+      "source": "wiki/assets/klinta/klinta.avif",
+      "brand": "klinta"
+    },
     "markslojd.svg": {
       "md5": "1c8a1f4b96f8e005f9596fad3100528c",
       "source": "wiki/assets/markslojd/markslojd.svg",
       "brand": "markslojd"
     },
-    "mille-notti.svg": {
+    "markslojd.avif": {
+      "md5": "1fa6a96346ada0c0d81e6eea7f56aff1",
+      "source": "wiki/assets/markslojd/markslojd.avif",
+      "brand": "markslojd"
+    },
+    "mille_notti.svg": {
       "md5": "cb62e2c2778429fa44756f096eee5e31",
-      "source": "wiki/assets/mille-notti/mille-notti.svg",
-      "brand": "mille-notti"
+      "source": "wiki/assets/mille_notti/mille_notti.svg",
+      "brand": "mille_notti"
+    },
+    "mille_notti.avif": {
+      "md5": "4c556eb6fcc05596660c53b8501b8f22",
+      "source": "wiki/assets/mille_notti/mille_notti.avif",
+      "brand": "mille_notti"
     },
     "nuura.svg": {
       "md5": "a849643e8bc657b84063002294594409",
       "source": "wiki/assets/nuura/nuura.svg",
+      "brand": "nuura"
+    },
+    "nuura.png": {
+      "md5": "81c0177d5d197a5bf0ff17270eb8922f",
+      "source": "wiki/assets/nuura/nuura.png",
       "brand": "nuura"
     },
     "segway.svg": {
@@ -57,9 +112,19 @@
       "source": "wiki/assets/segway/segway.svg",
       "brand": "segway"
     },
+    "segway.png": {
+      "md5": "4c60cb138f6a089f7083286b71355834",
+      "source": "wiki/assets/segway/segway.png",
+      "brand": "segway"
+    },
     "tergent.svg": {
       "md5": "cc18c2ab47d0cf17578897a3175d864d",
       "source": "wiki/assets/tergent/tergent.svg",
+      "brand": "tergent"
+    },
+    "tergent.jpg": {
+      "md5": "6d555bb302a5836d19ff06d478806de5",
+      "source": "wiki/assets/tergent/tergent.jpg",
       "brand": "tergent"
     },
     "thefriendlyhome.svg": {
@@ -67,14 +132,29 @@
       "source": "wiki/assets/thefriendlyhome/thefriendlyhome.svg",
       "brand": "thefriendlyhome"
     },
+    "thefriendlyhome.jpg": {
+      "md5": "5890e0389fc71ccc9a3fca9e7fcabf63",
+      "source": "wiki/assets/thefriendlyhome/thefriendlyhome.jpg",
+      "brand": "thefriendlyhome"
+    },
     "tinekhome.svg": {
       "md5": "1808e9a288be44724bf5ba598fd974cb",
       "source": "wiki/assets/tinekhome/tinekhome.svg",
       "brand": "tinekhome"
     },
+    "tinekhome.jpg": {
+      "md5": "2cb9a8340bdd512a8de87f2d782991aa",
+      "source": "wiki/assets/tinekhome/tinekhome.jpg",
+      "brand": "tinekhome"
+    },
     "vedum.svg": {
       "md5": "62ec886cf0b062d0e372175e012d8c60",
       "source": "wiki/assets/vedum/vedum.svg",
+      "brand": "vedum"
+    },
+    "vedum.png": {
+      "md5": "52d5497cdcb669ace92c0878e98b0dad",
+      "source": "wiki/assets/vedum/vedum.png",
       "brand": "vedum"
     },
     "villasjovik.svg": {
